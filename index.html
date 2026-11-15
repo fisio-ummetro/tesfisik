@@ -523,6 +523,8 @@ nav button{color:#b9c6e6}
 <section id="data">
  <div class="card">
   <h2>Data Tersimpan</h2>
+  <div id="adminBox" style="display:none;margin-bottom:8px"><div class="seg"><label><input type="radio" name="recView" value="mine" checked onchange="setView()"><span>Data saya</span></label><label><input type="radio" name="recView" value="all" onchange="setView()"><span>Semua akun</span></label></div></div>
+  <input id="recSearch" placeholder="Cari nama, no. responden, kecamatan, atau akun…" oninput="drawRecs()" style="margin-bottom:6px">
   <p class="mut" id="recOwner"></p>
   <div id="legacyBox"></div>
   <div id="recList"></div>
@@ -868,7 +870,7 @@ function renderGripNorm(){
 }
 
 /* ---------- state ---------- */
-function fields(){return Array.prototype.slice.call(document.querySelectorAll('main input, main textarea, main select')).filter(function(e){return e.id||e.name})}
+function fields(){return Array.prototype.slice.call(document.querySelectorAll('main input, main textarea, main select')).filter(function(e){return (e.id||e.name)&&e.id!=='recSearch'&&e.name!=='recView'})}
 function collect(){var d={};fields().forEach(function(e){if(e.type==='radio'){if(e.checked)d['r_'+e.name]=e.value}else if(e.type==='checkbox')d[e.id]=e.checked;else d[e.id]=e.value});return d}
 function fill(d){fields().forEach(function(e){if(e.type==='radio')e.checked=d['r_'+e.name]===e.value||(!d['r_'+e.name]&&((e.name==='gripMode'&&e.value==='max')||(e.name==='skoPos'&&e.value==='Berdiri')||(e.name==='tugMode'&&e.value==='mean')));else if(e.type==='checkbox')e.checked=!!d[e.id];else e.value=d[e.id]!=null?d[e.id]:(e.id==='srOffset'?'0':'')});
  setAddr(d.kab,d.kec,d.kel);$('prov').value='Lampung';
@@ -889,6 +891,7 @@ function buildRec(){
  sum2(o,rec.sum);return rec;
 }
 function saveRecord(){
+ if(FOREIGN){toast('Data ini milik akun '+FOREIGN+'. Admin hanya dapat melihat/mencetak; perubahan dilakukan oleh akun pemiliknya.');return}
  var d=collect();if(!d.nama&&!d.no){toast('Isi nama atau no. responden dulu');go('identitas');return}
  if(!selTests().length){toast('Pilih minimal satu tes yang dilakukan');go('identitas');return}
  var rec=buildRec();
@@ -897,20 +900,33 @@ function saveRecord(){
  Cloud.save(rec).then(function(st){toast(st==='synced'?'Data tersimpan ke akun':'Offline: data disimpan di HP, akan terkirim otomatis saat online')}).catch(function(e){toast('Gagal menyimpan: '+e.message)});
 }
 function newForm(){if(!confirm('Kosongkan form untuk klien baru? Pastikan data sudah disimpan.'))return;resetForm();saveDraft();go('identitas')}
-function resetForm(){editingId=null;fill({});$('tglperiksa').value=today();$('jam').value=nowTime();if(ME&&ME.nama)$('pemeriksa').value=ME.nama}
-function openRec(id){var r=REC.find(function(x){return x.id===id});if(!r)return;editingId=id;fill(r.d);saveDraft();go('identitas');toast('Data dibuka untuk diedit')}
+function resetForm(){editingId=null;FOREIGN=null;fill({});$('tglperiksa').value=today();$('jam').value=nowTime();if(ME&&ME.nama)$('pemeriksa').value=ME.nama}
+var ADMINS=['admin'],VIEW='mine',ALL=[],FOREIGN=null;
+function isAdmin(){return ME&&ADMINS.indexOf(ME.username)>=0}
+function curList(){return VIEW==='all'?ALL:REC}
+function setView(){VIEW=radio('recView')||'mine';if(VIEW==='all'&&!ALL.loaded){$('recList').innerHTML='<p class="mut">Memuat data semua akun…</p>';
+ Cloud.listAll().then(function(l){ALL=l.sort(function(x,y){return x.saved<y.saved?1:-1});ALL.loaded=true;drawRecs()}).catch(function(e){$('recList').innerHTML='<p class="err">'+esc(e.message)+(/ditolak/.test(e.message)?' Pastikan aturan admin sudah ditambahkan di Firestore Rules.':'')+'</p>'});return}
+ drawRecs()}
+function openRec(id,own){var list=own===false?ALL:REC;var r=list.find(function(x){return x.id===id});if(!r)return;
+ var mine=own!==false;
+ if(mine){FOREIGN=null;editingId=id;fill(r.d);saveDraft();go('identitas');toast('Data dibuka untuk diedit');return}
+ FOREIGN=r.by||'lain';editingId=null;fill(r.d);go('identitas');toast('Mode lihat: data milik akun '+FOREIGN+' (bisa dilihat & dicetak, tidak bisa diubah)')}
 function delRec(id){if(!confirm('Hapus data ini dari akun?'))return;REC=REC.filter(function(x){return x.id!==id});if(editingId===id)editingId=null;drawRecs();
  Cloud.remove(id).catch(function(e){toast('Gagal menghapus: '+e.message)})}
 function renderRecs(force){
  if(!ME)return;
+ $('adminBox').style.display=isAdmin()?'block':'none';
+ if(VIEW==='all'){if(force)ALL.loaded=false;setView();return Promise.resolve()}
  if(force||!REC.loaded){$('recList').innerHTML='<p class="mut">Memuat data…</p>';
   return Cloud.list().then(function(l){REC=l;REC.loaded=true;drawRecs()}).catch(function(e){$('recList').innerHTML='<p class="err">'+esc(e.message)+'</p>'})}
  drawRecs();return Promise.resolve();
 }
 function drawRecs(){
- var recs=REC;
- $('recOwner').innerHTML='Akun: <b>'+esc(ME.username)+'</b> · '+recs.length+' pengukuran';
- $('recList').innerHTML=recs.length?recs.map(function(r){return '<div class="rec"><div><b>'+esc(r.d.nama||'(tanpa nama)')+'</b> '+(r.d.no?'· '+esc(r.d.no):'')+'<br><small>'+(r.d.tglperiksa||r.saved.slice(0,10))+' · '+(r.d.r_jk||'-')+' · '+(r.d.usia||'-')+' th'+(r.d.kec?' · '+esc(r.d.kec):'')+'<br>'+esc(testsOf(r.d))+'</small></div><button onclick="openRec(\''+r.id+'\')">Buka</button><button class="x" onclick="delRec(\''+r.id+'\')">Hapus</button></div>'}).join(''):'<p class="mut">Belum ada data tersimpan di akun ini.</p>';
+ var all=curList(),q=($('recSearch').value||'').toLowerCase().trim();
+ var recs=q?all.filter(function(r){return [r.d.nama,r.d.no,r.d.kec,r.d.kab,r.d.kel,r.by].join(' ').toLowerCase().indexOf(q)>=0}):all;
+ var akun={};all.forEach(function(r){akun[r.by||'-']=1});
+ $('recOwner').innerHTML=(VIEW==='all'?'<b>Semua akun</b> ('+Object.keys(akun).length+' akun) · ':'Akun: <b>'+esc(ME.username)+'</b> · ')+all.length+' pengukuran'+(q?' · '+recs.length+' cocok':'');
+ $('recList').innerHTML=recs.length?recs.map(function(r){return '<div class="rec"><div><b>'+esc(r.d.nama||'(tanpa nama)')+'</b> '+(r.d.no?'· '+esc(r.d.no):'')+'<br><small>'+(r.d.tglperiksa||r.saved.slice(0,10))+' · '+(r.d.r_jk||'-')+' · '+(r.d.usia||'-')+' th'+(r.d.kec?' · '+esc(r.d.kec):'')+'<br>'+esc(testsOf(r.d))+(VIEW==='all'?' · akun <b>'+esc(r.by||'-')+'</b>':'')+'</small></div>'+(VIEW==='all'&&r._uid!==ME.uid?'<button onclick="openRec(\''+r.id+'\',false)">Lihat</button>':'<button onclick="openRec(\''+r.id+'\')">Buka</button><button class="x" onclick="delRec(\''+r.id+'\')">Hapus</button>')+'</div>'}).join(''):'<p class="mut">'+(q?'Tidak ada data yang cocok.':'Belum ada data tersimpan.')+'</p>';
  drawLegacy();
 }
 function testsOf(d){var old=d.tGrip===undefined;return TESTS.filter(function(t){return old?['grip','sr','bia','sko'].indexOf(t.id)>=0:!!d[t.cb]}).map(function(t){return t.short}).join(' · ')}
@@ -937,12 +953,13 @@ CSV_COLS.splice(13,0,['$$tests','Tes dilakukan']);
 function colVal(r,k){if(k==='$$by')return r.by;if(k==='$$tests')return testsOf(r.d);var g=COLGRP[k];if(g){var t=TESTS.find(function(x){return x.id===g});if(r.d[t.cb]===false)return ''}return k[0]==='$'?r.sum[k.slice(1)]:r.d[k]}
 function cell(v){if(v==null)v='';if(v===true)v='Ya';if(v===false)v='';if(typeof v==='number')v=(Math.round(v*100)/100).toString();v=String(v);if(/^-?\d+(\.\d+)?$/.test(v))v=v.replace('.',',');return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
 function exportCSV(){
+ if(VIEW==='all'){if(!ALL.loaded){toast('Tunggu data semua akun selesai dimuat');return}exportCSV2();return}
  renderRecs().then(function(){exportCSV2()})}
 function exportCSV2(){
- var recs=REC;if(!recs.length){toast('Belum ada data');return}
+ var recs=curList();if(!recs.length){toast('Belum ada data');return}
  var lines=[CSV_COLS.map(function(c){return c[1]}).join(';')];
  recs.slice().reverse().forEach(function(r){lines.push(CSV_COLS.map(function(c){return cell(colVal(r,c[0]))}).join(';'))});
- var csv='sep=;\n'+lines.join('\n'),name='tes-fisik-'+today()+'-'+Date.now().toString().slice(-4)+'-'+(ME?ME.username:'')+'.csv';
+ var csv='sep=;\n'+lines.join('\n'),name='tes-fisik-'+today()+'-'+Date.now().toString().slice(-4)+'-'+(VIEW==='all'?'semua-akun':(ME?ME.username:''))+'.csv';
  if(window.Android&&Android.saveFile){var p=Android.saveFile(name,'text/csv',csv);
   if(p&&p!=='ERR'&&p!=='UNSUPPORTED'){toast('Tersimpan: '+p);return}
   Android.shareText('Data Tes Fisik',csv);return}
@@ -1004,7 +1021,7 @@ document.querySelector('main').addEventListener('change',function(){calc();saveD
 
 renderGripNorm();
 /* ---------- akun ---------- */
-var APP_VERSION='4.2 (15 Nov 2026)';
+var APP_VERSION='4.3 (15 Nov 2026)';
 if('serviceWorker' in navigator&&location.protocol==='https:'&&location.hostname!=='app.local'){navigator.serviceWorker.register('sw.js').catch(function(){})}
 var DEFAULT_CONFIG={apiKey:"AIzaSyDm_HcF1wc8oK7lahzJQCJCTlvrZJXJsJc",authDomain:"fisioterapi-ummetro.firebaseapp.com",projectId:"fisioterapi-ummetro",storageBucket:"fisioterapi-ummetro.firebasestorage.app",messagingSenderId:"411291393908",appId:"1:411291393908:web:0a2e99907fc6357a88d621"}; /* bisa diisi konfigurasi Firebase bawaan saat build */
 var ME=null;
@@ -1031,7 +1048,7 @@ function doAuth(){
  $('aErr').textContent='';var lbl=b.textContent;busy(b,true,'Memproses…');
  (up?Cloud.register(u,p,$('aNama').value.trim()):Cloud.login(u,p)).catch(function(e){$('aErr').textContent=e.message}).then(function(){busy(b,false,lbl)})}
 function onLogin(u){
- ME=u;REC=[];REC.loaded=false;
+ ME=u;REC=[];REC.loaded=false;ALL=[];ALL.loaded=false;VIEW='mine';FOREIGN=null;var rv=document.querySelector('input[name=recView][value=mine]');if(rv)rv.checked=true;
  if(!u){document.querySelector('input[name=authMode][value=in]').checked=true;authMode();$('aPass').value='';$('authOv').classList.add('on');$('userBtn').textContent='👤';$('menu').classList.remove('on');return}
  $('authOv').classList.remove('on');$('aPass').value=$('aPass2').value='';
  $('userBtn').textContent='👤 '+u.username;$('menuInfo').innerHTML='Masuk sebagai <b>'+esc(u.username)+'</b>'+(u.nama?'<br>'+esc(u.nama):'')+'<br><span style="font-size:11px">Versi '+APP_VERSION+(location.hostname==='app.local'?' · mode offline bawaan':'')+'</span>';
