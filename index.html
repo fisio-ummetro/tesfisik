@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tes Fisik Fisioterapi</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0B2160">
+<link rel="icon" href="icon-192.png">
+<style>
+:root{--pri:#0B2160;--pri2:#0FA3C4;--bg:#F3F6F9;--card:#fff;--ink:#1B2733;--mut:#5E6B78;--line:#DCE3EA;--ok:#1E8E4E;--warn:#C77700;--bad:#C0392B}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px}
+header{background:var(--pri);color:#fff;padding:14px 16px 10px;position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:17px;font-weight:600}
+header small{opacity:.85;font-size:12px}
+nav{display:flex;overflow-x:auto;background:var(--pri);position:sticky;top:52px;z-index:5;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;background:none;border:0;color:#cfe3f2;padding:10px 14px;font-size:14px;border-bottom:3px solid transparent}
+nav button.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+main{padding:12px 12px 90px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.card h2{font-size:16px;margin:0 0 10px;color:var(--pri)}
+.card h3{font-size:14px;margin:14px 0 6px}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:15px;background:#fff;color:var(--ink)}
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--pri2);border-color:transparent}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;align-items:center}
+.row4{display:grid;grid-template-columns:auto 1fr 1fr 1.2fr;gap:6px;align-items:center;font-size:13px}
+.row4 .h{font-size:12px;color:var(--mut);text-align:center}
+.mmtg{grid-template-columns:1.5fr 1fr 1fr}
+.row3 .h{font-size:12px;color:var(--mut);text-align:center}
+.chk{display:flex;align-items:flex-start;gap:8px;margin:8px 0;font-size:14px;color:var(--ink)}
+.chk input{width:20px;height:20px;flex:0 0 20px;margin:0}
+.seg{display:flex;gap:6px}.seg label{flex:1;margin:0}
+.seg input{display:none}.seg span{display:block;text-align:center;padding:9px;border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:14px}
+.seg input:checked+span{background:var(--pri);color:#fff;border-color:var(--pri)}
+.res{margin-top:12px;padding:12px;border-radius:10px;background:#EEF5FB;font-size:14px;line-height:1.5}
+.res b{font-size:16px}
+.tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:600;color:#fff;background:var(--mut)}
+.t-ok{background:var(--ok)}.t-warn{background:var(--warn)}.t-bad{background:var(--bad)}.t-pri{background:var(--pri2)}
+details{margin-top:10px}summary{color:var(--pri);font-size:14px;cursor:pointer}
+ol,ul{padding-left:20px;margin:6px 0;font-size:14px;line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+th,td{border:1px solid var(--line);padding:5px;text-align:center}
+th{background:#EEF2F6}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{flex:1 1 auto;padding:12px;border:0;border-radius:10px;background:var(--pri);color:#fff;font-size:15px;font-weight:600}
+.btn.sec{background:#E4EDF5;color:var(--pri)}.btn.del{background:#FBE9E7;color:var(--bad)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 12px;display:flex;gap:8px;z-index:6}
+.bar .btn{padding:11px}
+.rec{padding:10px 0;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center}
+.rec div{flex:1;font-size:14px}.rec small{color:var(--mut)}
+.rec button{padding:8px 10px;border:0;border-radius:8px;background:#E4EDF5;color:var(--pri);font-weight:600}
+.rec button.x{background:#FBE9E7;color:var(--bad)}
+.mut{color:var(--mut);font-size:12.5px}
+#print{display:none}
+header{display:flex;align-items:center;gap:8px}header .t{flex:1;min-width:0}
+header .t h1,header .t small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hlogo{height:32px;flex:0 0 auto;background:#fff;border-radius:8px;padding:4px 6px}
+nav button{color:#b9c6e6}
+#userBtn{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:20px;padding:6px 12px;font-size:13px;max-width:45%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ov{position:fixed;inset:0;background:var(--bg);z-index:50;overflow:auto;display:none}
+.ov.on{display:block}
+.ov .in{max-width:440px;margin:0 auto;padding:28px 16px 40px}
+.brand{text-align:center;margin:10px 0 18px}.brand .logo{width:72px;height:72px;border-radius:18px;background:var(--pri);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:30px;font-weight:700}
+.brand h1{font-size:20px;margin:10px 0 2px;color:var(--pri)}.brand p{margin:0;color:var(--mut);font-size:13px}
+.err{color:var(--bad);font-size:13.5px;margin-top:8px;min-height:18px}
+.link{background:none;border:0;color:var(--pri);font-size:14px;padding:10px 0;text-decoration:underline}
+.sync{font-size:12px;opacity:.85}
+.menu{position:fixed;top:56px;right:10px;background:#fff;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.18);z-index:40;display:none;min-width:220px;overflow:hidden}
+.menu.on{display:block}.menu div{padding:12px 14px;border-bottom:1px solid var(--line);font-size:13px;color:var(--mut)}
+.menu button{display:block;width:100%;text-align:left;background:none;border:0;padding:13px 14px;font-size:15px;color:var(--ink);border-bottom:1px solid var(--line)}
+.menu button:last-child{border-bottom:0;color:var(--bad)}
+@media print{
+  header,nav,main,.bar{display:none!important}
+  #print{display:block;font-size:11pt;color:#000;padding:0}
+  #print h1{font-size:14pt;text-align:center;margin:0}
+  #print .sub{text-align:center;font-size:10pt;margin-bottom:10px}
+  #print h2{font-size:11.5pt;margin:12px 0 4px;border-bottom:1px solid #000}
+  #print table{font-size:10pt}#print th,#print td{border:1px solid #444;padding:3px 5px;text-align:left}
+  #print .sign{display:flex;justify-content:space-between;margin-top:30px;text-align:center}
+  #print .sign div{width:45%}
+}
+</style>
+</head>
+<body>
+<header><img src="logo-mark.png" alt="" class="hlogo"><div class="t"><h1>Tes Fisik Fisioterapi</h1><small>D3 Fisioterapi · UM Metro</small></div><button id="userBtn" onclick="toggleMenu()">👤</button></header>
+<div class="menu" id="menu">
+ <div id="menuInfo"></div>
+ <button onclick="toggleMenu();showPw()">Ganti password</button>
+ <button onclick="toggleMenu();showServer()">Pengaturan server</button>
+ <button onclick="doLogout()">Keluar</button>
+</div>
+
+<div class="ov" id="authOv"><div class="in">
+ <div class="brand"><img src="logo.png" alt="Fisioterapi UM Metro" style="width:68%;max-width:260px"><h1>Tes Fisik Fisioterapi</h1><p>Prodi D3 Fisioterapi · FIKes UM Metro</p></div>
+ <div class="card">
+  <div class="seg" style="margin-bottom:6px"><label><input type="radio" name="authMode" value="in" checked onchange="authMode()"><span>Masuk</span></label><label><input type="radio" name="authMode" value="up" onchange="authMode()"><span>Daftar akun</span></label></div>
+  <div id="upOnly1" style="display:none"><label>Nama lengkap (pemeriksa)</label><input id="aNama" autocomplete="name"></div>
+  <label>Username</label><input id="aUser" autocapitalize="none" autocomplete="username" spellcheck="false">
+  <label>Password</label><input id="aPass" type="password" autocomplete="current-password">
+  <div id="upOnly2" style="display:none"><label>Ulangi password</label><input id="aPass2" type="password" autocomplete="new-password"></div>
+  <label class="chk"><input type="checkbox" onchange="$('aPass').type=$('aPass2').type=this.checked?'text':'password'">Tampilkan password</label>
+  <div class="err" id="aErr"></div>
+  <div class="btns"><button class="btn" id="aBtn" onclick="doAuth()">Masuk</button></div>
+  <p class="mut" id="upHint" style="display:none">Username 3–30 karakter: huruf kecil, angka, titik, garis bawah, atau strip. Password minimal 6 karakter. Akun yang sama bisa dipakai login di HP mana pun.</p>
+ </div>
+ <div style="text-align:center"><button class="link" onclick="showServer()">Pengaturan server</button></div>
+</div></div>
+
+<div class="ov" id="serverOv"><div class="in">
+ <div class="card">
+  <h2>Pengaturan Server (Firebase)</h2>
+  <p class="mut">Tempelkan konfigurasi web app dari Firebase Console (Project settings → Your apps → SDK setup and configuration → Config). Cukup dilakukan sekali per HP oleh admin.</p>
+  <textarea id="cfgText" style="min-height:180px;font-family:monospace;font-size:12.5px" placeholder="const firebaseConfig = {&#10;  apiKey: &quot;...&quot;,&#10;  authDomain: &quot;...&quot;,&#10;  projectId: &quot;...&quot;,&#10;  appId: &quot;...&quot;&#10;};"></textarea>
+  <div class="err" id="cfgErr"></div>
+  <div class="btns"><button class="btn" onclick="saveServer()">Simpan</button><button class="btn sec" onclick="closeServer()">Batal</button></div>
+  <p class="mut" id="cfgNow"></p>
+ </div>
+</div></div>
+
+<div class="ov" id="pwOv"><div class="in">
+ <div class="card">
+  <h2>Ganti Password</h2>
+  <label>Password lama</label><input id="pwOld" type="password">
+  <label>Password baru</label><input id="pwNew" type="password">
+  <label>Ulangi password baru</label><input id="pwNew2" type="password">
+  <div class="err" id="pwErr"></div>
+  <div class="btns"><button class="btn" onclick="doChangePw()">Simpan</button><button class="btn sec" onclick="$('pwOv').classList.remove('on')">Batal</button></div>
+ </div>
+</div></div>
+<nav id="tabs">
+  <button data-t="identitas" class="on">Identitas</button>
+  <button data-t="grip">Hand Grip</button>
+  <button data-t="sr">Sit &amp; Reach</button>
+  <button data-t="bia">Komposisi Tubuh</button>
+  <button data-t="sko">Scoliometer</button>
+  <button data-t="mwt">6MWT</button>
+  <button data-t="bbs">Berg Balance</button>
+  <button data-t="tug">TUG</button>
+  <button data-t="mmt">MMT</button>
+  <button data-t="odi">Oswestry</button>
+  <button data-t="hasil">Hasil</button>
+  <button data-t="data">Data Tersimpan</button>
+</nav>
+<main>
+
+<!-- IDENTITAS -->
+<section id="identitas" class="on">
+ <div class="card" id="selCard">
+  <h2>Tes yang Dilakukan Hari Ini</h2>
+  <p class="mut">Centang tes yang akan dilakukan. Hanya tes terpilih yang muncul di menu, rekap, cetak, dan ringkasan.</p>
+  <div id="selList"></div>
+  <div class="btns"><button class="btn sec" onclick="setTests(TESTS.map(function(t){return t.id}))">Pilih semua</button><button class="btn sec" onclick="setTests([])">Kosongkan</button></div>
+ </div>
+ <div class="card">
+  <h2>Identitas Klien</h2>
+  <label>No. Responden / RM</label><input id="no">
+  <label>Nama</label><input id="nama">
+  <label>Jenis kelamin</label>
+  <div class="seg"><label><input type="radio" name="jk" value="L"><span>Laki-laki</span></label><label><input type="radio" name="jk" value="P"><span>Perempuan</span></label></div>
+  <div class="row">
+   <div><label>Tanggal lahir</label><input id="tgllahir" type="date"></div>
+   <div><label>Usia (tahun)</label><input id="usia" type="number" inputmode="numeric" min="5" max="110"></div>
+  </div>
+  <div class="row">
+   <div><label>Tinggi badan (cm)</label><input id="tb" type="number" inputmode="decimal" step="0.1"></div>
+   <div><label>Tangan dominan</label><select id="dominan"><option value="">–</option><option>Kanan</option><option>Kiri</option></select></div>
+  </div>
+  <h3>Alamat</h3>
+  <div class="row">
+   <div><label>Provinsi</label><select id="prov"><option>Lampung</option></select></div>
+   <div><label>Kabupaten/Kota</label><select id="kab"><option value="">– pilih –</option></select></div>
+  </div>
+  <div class="row">
+   <div><label>Kecamatan</label><select id="kec"><option value="">– pilih kab/kota dulu –</option></select></div>
+   <div><label>Kelurahan/Desa</label><select id="kel"><option value="">– pilih kecamatan dulu –</option></select></div>
+  </div>
+  <label>Alamat (jalan, dusun, RT/RW, no. rumah)</label><input id="alamat">
+  <label>No. HP (opsional)</label><input id="hp" type="tel" inputmode="tel">
+  <label>Pekerjaan / aktivitas olahraga</label><input id="pekerjaan">
+  <label>Riwayat penyakit / cedera</label><textarea id="riwayat"></textarea>
+  <div class="row">
+   <div><label>Tanggal pemeriksaan</label><input id="tglperiksa" type="date"></div>
+   <div><label>Jam</label><input id="jam" type="time"></div>
+  </div>
+  <label>Pemeriksa</label><input id="pemeriksa">
+ </div>
+ <div class="card">
+  <h2>Skrining Keamanan</h2>
+  <p class="mut">Centang bila ada. Bila ada yang tercentang, pertimbangkan menunda tes terkait dan catat alasannya.</p>
+  <label class="chk"><input type="checkbox" id="sk1">Nyeri/cedera akut tangan–pergelangan</label>
+  <label class="chk"><input type="checkbox" id="sk2">Nyeri punggung bawah akut / HNP</label>
+  <label class="chk"><input type="checkbox" id="sk3">Pasca operasi &lt; 3 bulan</label>
+  <label class="chk"><input type="checkbox" id="sk4">Hipertensi tidak terkontrol</label>
+  <label class="chk"><input type="checkbox" id="sk5">Alat pacu jantung / implan elektronik</label>
+  <label class="chk"><input type="checkbox" id="sk6">Hamil</label>
+  <div id="skWarn"></div>
+ </div>
+</section>
+
+<!-- HAND GRIP -->
+<section id="grip">
+ <div class="card">
+  <h2>Hand Grip Strength Test</h2>
+  <p class="mut">Mengukur kekuatan genggam sebagai indikator kekuatan otot umum.</p>
+  <label>Merek / tipe dinamometer</label><input id="gripAlat" placeholder="mis. CAMRY EH101">
+  <details><summary>Prosedur</summary><ol>
+   <li>Duduk tegak, bahu adduksi netral, siku fleksi 90°, lengan bawah netral, pergelangan 0–30° ekstensi.</li>
+   <li>Atur pegangan sesuai ukuran tangan.</li>
+   <li>Instruksi: "Genggam sekuat-kuatnya selama 3 detik." Aba-aba sama setiap percobaan.</li>
+   <li>3 kali tiap tangan bergantian, istirahat ± 60 detik.</li>
+   <li>Catat nilai tertinggi atau rata-rata sesuai protokol.</li>
+  </ol></details>
+  <h3>Hasil (kg)</h3>
+  <div class="row3"><span></span><span class="h">Kanan</span><span class="h">Kiri</span>
+   <span>1</span><input id="gr1" type="number" inputmode="decimal" step="0.1"><input id="gl1" type="number" inputmode="decimal" step="0.1">
+   <span>2</span><input id="gr2" type="number" inputmode="decimal" step="0.1"><input id="gl2" type="number" inputmode="decimal" step="0.1">
+   <span>3</span><input id="gr3" type="number" inputmode="decimal" step="0.1"><input id="gl3" type="number" inputmode="decimal" step="0.1">
+  </div>
+  <label>Nilai yang dipakai</label>
+  <div class="seg"><label><input type="radio" name="gripMode" value="max" checked><span>Tertinggi</span></label><label><input type="radio" name="gripMode" value="mean"><span>Rata-rata</span></label></div>
+  <div class="res" id="gripRes">Isi jenis kelamin, usia, dan hasil percobaan.</div>
+  <label>Catatan</label><textarea id="gripCat"></textarea>
+  <details><summary>Lihat tabel norma</summary><div id="gripNorm"></div>
+   <p class="mut">Acuan: tabel manual dinamometer digital CAMRY. Sesuaikan dengan norma alat/penelitian Anda. Ambang sarkopenia AWGS 2019 (usia ≥ 60): laki-laki &lt; 28 kg, perempuan &lt; 18 kg.</p></details>
+ </div>
+</section>
+
+<!-- SIT AND REACH -->
+<section id="sr">
+ <div class="card">
+  <h2>Sit and Reach Test</h2>
+  <p class="mut">Mengukur fleksibilitas hamstring dan punggung bawah.</p>
+  <details><summary>Prosedur</summary><ol>
+   <li>Pemanasan ringan 3–5 menit, tanpa alas kaki.</li>
+   <li>Duduk, lutut lurus, telapak kaki rata menempel kotak, selebar ± 15–20 cm.</li>
+   <li>Tangan ditumpuk, ujung jari sejajar, telapak menghadap bawah.</li>
+   <li>Membungkuk perlahan, jangkau sejauh mungkin, tahan 2 detik; lutut tidak menekuk, tidak menghentak.</li>
+   <li>3 kali, catat jangkauan terbaik.</li>
+  </ol></details>
+  <label>Posisi telapak kaki pada penggaris (cm)</label>
+  <input id="srOffset" type="number" inputmode="decimal" step="0.5" value="0">
+  <p class="mut">Isi 0 bila titik 0 tepat di telapak kaki. Bila telapak kaki berada di angka 23 atau 26 cm, isi angka tersebut; hasil akan dikoreksi otomatis. Nilai negatif = tidak mencapai telapak kaki.</p>
+  <h3>Hasil (cm, angka terbaca pada penggaris)</h3>
+  <div class="row3"><span></span><span class="h">Jangkauan</span><span class="h">Keterangan</span>
+   <span>1</span><input id="sr1" type="number" inputmode="decimal" step="0.5"><input id="srk1" placeholder="lutut lurus?">
+   <span>2</span><input id="sr2" type="number" inputmode="decimal" step="0.5"><input id="srk2">
+   <span>3</span><input id="sr3" type="number" inputmode="decimal" step="0.5"><input id="srk3">
+  </div>
+  <div class="res" id="srRes">Isi jenis kelamin dan hasil percobaan.</div>
+  <label>Keluhan saat tes (nyeri/kesemutan)</label><textarea id="srCat"></textarea>
+  <details><summary>Lihat tabel norma</summary>
+   <table><tr><th>Kategori</th><th>Laki-laki</th><th>Perempuan</th></tr>
+   <tr><td>Sangat baik sekali</td><td>&gt; +27</td><td>&gt; +30</td></tr>
+   <tr><td>Sangat baik</td><td>+17 s.d. +27</td><td>+21 s.d. +30</td></tr>
+   <tr><td>Baik</td><td>+6 s.d. +16</td><td>+11 s.d. +20</td></tr>
+   <tr><td>Sedang</td><td>0 s.d. +5</td><td>+1 s.d. +10</td></tr>
+   <tr><td>Kurang</td><td>−8 s.d. −1</td><td>−7 s.d. 0</td></tr>
+   <tr><td>Buruk</td><td>−19 s.d. −9</td><td>−14 s.d. −8</td></tr>
+   <tr><td>Sangat buruk</td><td>&lt; −20</td><td>&lt; −15</td></tr></table>
+   <p class="mut">Titik 0 = telapak kaki; dewasa.</p></details>
+ </div>
+</section>
+
+<!-- BIA -->
+<section id="bia">
+ <div class="card">
+  <h2>Komposisi Tubuh – OnPoint Axis</h2>
+  <p class="mut">Metode bioelectrical impedance analysis (BIA) melalui timbangan pintar dan aplikasinya.</p>
+  <h3>Kondisi sebelum pengukuran</h3>
+  <label class="chk"><input type="checkbox" id="bk1">Tidak makan berat ± 2–3 jam sebelumnya</label>
+  <label class="chk"><input type="checkbox" id="bk2">Sudah buang air kecil</label>
+  <label class="chk"><input type="checkbox" id="bk3">Tidak olahraga berat ± 12 jam sebelumnya</label>
+  <label class="chk"><input type="checkbox" id="bk4">Tidak minum kafein/alkohol menjelang tes</label>
+  <label class="chk"><input type="checkbox" id="bk5">Tidak menstruasi / tidak edema</label>
+  <label class="chk"><input type="checkbox" id="bk6">Tanpa alas kaki &amp; kaus kaki, telapak kering</label>
+  <label class="chk"><input type="checkbox" id="bk7">Benda logam dilepas, pakaian ringan</label>
+  <label class="chk"><input type="checkbox" id="bk8">Tanpa alat pacu jantung, tidak hamil</label>
+  <details><summary>Prosedur</summary><ol>
+   <li>Timbangan di permukaan datar dan keras.</li>
+   <li>Pastikan profil (tinggi, usia, jenis kelamin) benar di aplikasi dan Bluetooth tersambung.</li>
+   <li>Berdiri tegak, telapak menyentuh elektroda, diam hingga selesai.</li>
+   <li>Salin parameter ke form ini; simpan tangkapan layar.</li>
+  </ol></details>
+ </div>
+ <div class="card">
+  <h2>Hasil Pengukuran</h2>
+  <div class="row">
+   <div><label>Berat badan (kg)</label><input id="bb" type="number" inputmode="decimal" step="0.1"></div>
+   <div><label>IMT (otomatis bila kosong)</label><input id="bmi" type="number" inputmode="decimal" step="0.1"></div>
+  </div>
+  <div class="row">
+   <div><label>Lemak tubuh (%)</label><input id="fat" type="number" inputmode="decimal" step="0.1"></div>
+   <div><label>Lemak subkutan (%)</label><input id="subq" type="number" inputmode="decimal" step="0.1"></div>
+  </div>
+  <div class="row">
+   <div><label>Lemak viseral (level)</label><input id="visc" type="number" inputmode="decimal" step="1"></div>
+   <div><label>Massa otot (kg)</label><input id="otot" type="number" inputmode="decimal" step="0.1"></div>
+  </div>
+  <div class="row">
+   <div><label>Skeletal muscle rate (%)</label><input id="smr" type="number" inputmode="decimal" step="0.1"></div>
+   <div><label>Fat-free mass (kg)</label><input id="ffm" type="number" inputmode="decimal" step="0.1"></div>
+  </div>
+  <div class="row">
+   <div><label>Massa tulang (kg)</label><input id="tulang" type="number" inputmode="decimal" step="0.1"></div>
+   <div><label>Air tubuh (%)</label><input id="air" type="number" inputmode="decimal" step="0.1"></div>
+  </div>
+  <div class="row">
+   <div><label>Protein (%)</label><input id="protein" type="number" inputmode="decimal" step="0.1"></div>
+   <div><label>BMR (kkal)</label><input id="bmr" type="number" inputmode="numeric"></div>
+  </div>
+  <div class="row">
+   <div><label>Usia tubuh/metabolik (th)</label><input id="bodyage" type="number" inputmode="numeric"></div>
+   <div></div>
+  </div>
+  <div class="res" id="biaRes">Isi berat badan dan tinggi badan.</div>
+  <label>Interpretasi / catatan</label><textarea id="biaCat"></textarea>
+  <p class="mut">Acuan: IMT WHO Asia-Pasifik; lemak viseral 1–9 normal, 10–14 tinggi, ≥ 15 sangat tinggi; lemak tubuh dewasa ± 10–20% (L) dan ± 20–30% (P); air tubuh ± 50–65% (L) dan ± 45–60% (P). Utamakan rentang yang ditampilkan aplikasi OnPoint.</p>
+ </div>
+</section>
+
+<!-- SCOLIOMETER -->
+<section id="sko">
+ <div class="card">
+  <h2>Pemeriksaan Skoliosis – Scoliometer</h2>
+  <p class="mut">Adam's forward bend test dengan scoliometer untuk mengukur Angle of Trunk Rotation (ATR).</p>
+  <label>Merek / tipe scoliometer</label><input id="skoAlat" placeholder="mis. Scoliometer Bunnell / aplikasi ponsel">
+  <h3>Observasi postur berdiri (centang bila asimetris)</h3>
+  <label class="chk"><input type="checkbox" id="po1">Tinggi bahu tidak sama</label>
+  <label class="chk"><input type="checkbox" id="po2">Skapula menonjol / tidak simetris</label>
+  <label class="chk"><input type="checkbox" id="po3">Segitiga pinggang (waist triangle) tidak sama</label>
+  <label class="chk"><input type="checkbox" id="po4">Tinggi panggul / krista iliaka tidak sama</label>
+  <label class="chk"><input type="checkbox" id="po5">Kepala tidak segaris dengan lipatan gluteal (plumb line bergeser)</label>
+  <label class="chk"><input type="checkbox" id="po6">Lengkung tulang belakang tampak dari belakang</label>
+  <label>Perkiraan beda panjang tungkai (cm, bila ada)</label><input id="lld" type="number" inputmode="decimal" step="0.1">
+  <details><summary>Prosedur</summary><ol>
+   <li>Klien berdiri tanpa alas kaki, punggung terbuka, kaki rapat, lutut lurus.</li>
+   <li>Klien membungkuk ke depan perlahan, kedua lengan menggantung dengan telapak tangan saling menempel, kepala rileks.</li>
+   <li>Pemeriksa di belakang, sejajar mata dengan punggung; amati punuk (hump) iga/lumbal.</li>
+   <li>Letakkan scoliometer melintang di atas tulang belakang (lekukan alat di prosesus spinosus) pada tonjolan terbesar tiap regio: torakal, torakolumbal, lumbal.</li>
+   <li>Baca derajat ATR dan sisi tonjolan. Ulangi 2 kali tiap regio; nilai yang dipakai adalah yang terbesar.</li>
+   <li>Bila ada beda panjang tungkai, ulangi pada posisi duduk.</li>
+  </ol></details>
+  <label>Posisi pengukuran</label>
+  <div class="seg"><label><input type="radio" name="skoPos" value="Berdiri" checked><span>Berdiri</span></label><label><input type="radio" name="skoPos" value="Duduk"><span>Duduk</span></label></div>
+  <h3>Hasil ATR (derajat)</h3>
+  <div class="row4"><span></span><span class="h">Ukur 1</span><span class="h">Ukur 2</span><span class="h">Sisi tonjolan</span>
+   <span>Torakal</span><input id="atrT1" type="number" inputmode="decimal" step="0.5" min="0"><input id="atrT2" type="number" inputmode="decimal" step="0.5" min="0"><select id="atrTs"><option value="">–</option><option>Kanan</option><option>Kiri</option></select>
+   <span>Torako-lumbal</span><input id="atrTL1" type="number" inputmode="decimal" step="0.5" min="0"><input id="atrTL2" type="number" inputmode="decimal" step="0.5" min="0"><select id="atrTLs"><option value="">–</option><option>Kanan</option><option>Kiri</option></select>
+   <span>Lumbal</span><input id="atrL1" type="number" inputmode="decimal" step="0.5" min="0"><input id="atrL2" type="number" inputmode="decimal" step="0.5" min="0"><select id="atrLs"><option value="">–</option><option>Kanan</option><option>Kiri</option></select>
+  </div>
+  <div class="res" id="skoRes">Isi hasil pengukuran ATR.</div>
+  <label>Catatan (nyeri, keterbatasan membungkuk, dll.)</label><textarea id="skoCat"></textarea>
+  <details><summary>Acuan interpretasi</summary>
+   <table><tr><th>ATR</th><th>Interpretasi</th><th>Tindak lanjut</th></tr>
+   <tr><td>0–4°</td><td>Dalam batas normal</td><td>Tidak perlu tindak lanjut khusus</td></tr>
+   <tr><td>5–6°</td><td>Asimetri ringan (ambang skrining)</td><td>Observasi, ulangi pemeriksaan 3–6 bulan</td></tr>
+   <tr><td>≥ 7°</td><td>Curiga skoliosis bermakna (± Cobb ≥ 20°)</td><td>Rujuk dokter untuk foto rontgen (sudut Cobb)</td></tr></table>
+   <p class="mut">Acuan: Bunnell (1984); ambang 5° dan 7° umum dipakai pada skrining skoliosis. Scoliometer adalah alat skrining, bukan penegak diagnosis; diagnosis memerlukan radiografi (sudut Cobb).</p></details>
+ </div>
+</section>
+
+<!-- 6MWT -->
+<section id="mwt">
+ <div class="card">
+  <h2>6 Minute Walk Test (6MWT)</h2>
+  <p class="mut">Mengukur kapasitas fungsional/daya tahan kardiorespirasi submaksimal (pedoman ATS 2002).</p>
+  <details><summary>Kontraindikasi &amp; kriteria berhenti</summary>
+   <p style="font-size:14px;margin:6px 0"><b>Kontraindikasi absolut:</b> angina tidak stabil atau infark miokard dalam 1 bulan terakhir.<br><b>Relatif:</b> denyut nadi istirahat &gt; 120 x/menit, tekanan darah sistolik &gt; 180 mmHg atau diastolik &gt; 100 mmHg.</p>
+   <p style="font-size:14px;margin:6px 0"><b>Hentikan tes bila:</b> nyeri dada, sesak tidak tertahankan, kram tungkai, sempoyongan, keringat dingin berlebihan, pucat/kebiruan.</p>
+  </details>
+  <details><summary>Prosedur</summary><ol>
+   <li>Lintasan datar, lurus, panjang 30 m (tanda tiap 3 m), titik putar diberi kerucut.</li>
+   <li>Klien istirahat duduk ≥ 10 menit di dekat garis start; ukur nadi, SpO₂, tekanan darah, Borg sesak &amp; lelah.</li>
+   <li>Instruksi: "Berjalanlah sejauh mungkin selama 6 menit, bolak-balik di lintasan ini. Jangan berlari. Boleh memperlambat atau berhenti bila perlu, lalu lanjutkan secepatnya."</li>
+   <li>Gunakan kalimat penyemangat standar tiap menit, tanpa berjalan bersama klien.</li>
+   <li>Hitung jumlah putaran (bolak-balik = 2 lintasan) dan sisa jarak terakhir.</li>
+   <li>Segera setelah selesai: ukur nadi, SpO₂, tekanan darah, Borg sesak &amp; lelah.</li>
+  </ol></details>
+  <div class="row">
+   <div><label>Panjang lintasan (m)</label><input id="m6Lint" type="number" inputmode="decimal" placeholder="30"></div>
+   <div><label>Berat badan (kg)</label><input id="m6BB" type="number" inputmode="decimal" step="0.1" placeholder="otomatis dari BIA"></div>
+  </div>
+  <div class="row">
+   <div><label>Jumlah lintasan ditempuh</label><input id="m6Laps" type="number" inputmode="numeric"></div>
+   <div><label>Sisa jarak terakhir (m)</label><input id="m6Extra" type="number" inputmode="decimal" step="0.5"></div>
+  </div>
+  <p class="mut">1 lintasan = satu kali jalan sepanjang lintasan (bukan bolak-balik). Atau isi jarak total langsung:</p>
+  <label>Jarak total (m) – opsional, menggantikan hitungan di atas</label><input id="m6DistIn" type="number" inputmode="decimal">
+  <h3>Tanda vital</h3>
+  <div class="row4"><span></span><span class="h">Sebelum</span><span class="h">Sesudah</span><span></span>
+   <span>Nadi (x/mnt)</span><input id="m6HR0" type="number" inputmode="numeric"><input id="m6HR1" type="number" inputmode="numeric"><span></span>
+   <span>SpO₂ (%)</span><input id="m6O0" type="number" inputmode="numeric"><input id="m6O1" type="number" inputmode="numeric"><span></span>
+   <span>TD sistol</span><input id="m6S0" type="number" inputmode="numeric"><input id="m6S1" type="number" inputmode="numeric"><span></span>
+   <span>TD diastol</span><input id="m6D0" type="number" inputmode="numeric"><input id="m6D1" type="number" inputmode="numeric"><span></span>
+   <span>Borg sesak (0–10)</span><input id="m6B0" type="number" inputmode="decimal" step="0.5"><input id="m6B1" type="number" inputmode="decimal" step="0.5"><span></span>
+   <span>Borg lelah (0–10)</span><input id="m6F0" type="number" inputmode="decimal" step="0.5"><input id="m6F1" type="number" inputmode="decimal" step="0.5"><span></span>
+  </div>
+  <div class="row">
+   <div><label>Jumlah berhenti/istirahat</label><input id="m6Stop" type="number" inputmode="numeric"></div>
+   <div><label>Total waktu berhenti (detik)</label><input id="m6StopDur" type="number" inputmode="numeric"></div>
+  </div>
+  <div class="row">
+   <div><label>Alat bantu jalan</label><select id="m6Alat"><option value="">Tidak ada</option><option>Tongkat</option><option>Kruk</option><option>Walker</option></select></div>
+   <div><label>Oksigen tambahan</label><select id="m6Oks"><option value="">Tidak</option><option>Ya</option></select></div>
+  </div>
+  <label class="chk"><input type="checkbox" id="m6Early">Tes dihentikan sebelum 6 menit</label>
+  <label>Alasan berhenti / keluhan</label><input id="m6Alasan">
+  <div class="res" id="m6Res">Isi jarak tempuh.</div>
+  <label>Catatan</label><textarea id="m6Cat"></textarea>
+  <p class="mut">Prediksi jarak: Enright &amp; Sherrill (1998). Laki-laki = 7,57×TB − 5,02×usia − 1,76×BB − 309; perempuan = 2,11×TB − 2,29×BB − 5,78×usia + 667 (m). Batas bawah normal = prediksi − 153 m (L) / − 139 m (P). Estimasi VO₂peak = 0,03×jarak + 3,98 (Cahalin, 1996). Persamaan dari populasi dewasa Amerika; gunakan sebagai acuan.</p>
+ </div>
+</section>
+
+<!-- BBS -->
+<section id="bbs">
+ <div class="card">
+  <h2>Berg Balance Scale (BBS)</h2>
+  <p class="mut">14 item keseimbangan, skor 0–4 per item (total 0–56). Pilih skor terendah yang sesuai. Alat: stopwatch, penggaris, 2 kursi (dengan &amp; tanpa sandaran tangan), bangku pijakan ± 20 cm.</p>
+  <div id="bbsItems"></div>
+  <div class="res" id="bbsRes">Isi skor tiap item.</div>
+  <label>Catatan</label><textarea id="bbsCat"></textarea>
+  <p class="mut">Interpretasi: 41–56 risiko jatuh rendah (mandiri), 21–40 risiko sedang (berjalan dengan bantuan), 0–20 risiko tinggi (kursi roda). Skor &lt; 45 menandakan peningkatan risiko jatuh (Berg dkk.).</p>
+ </div>
+</section>
+
+<!-- TUG -->
+<section id="tug">
+ <div class="card">
+  <h2>Timed Up and Go (TUG)</h2>
+  <p class="mut">Mengukur mobilitas fungsional dan risiko jatuh.</p>
+  <details><summary>Prosedur</summary><ol>
+   <li>Kursi bersandaran tangan (tinggi dudukan ± 46 cm); tandai garis 3 m dari kaki kursi.</li>
+   <li>Klien duduk bersandar, memakai alas kaki biasa dan alat bantu jalan yang biasa dipakai.</li>
+   <li>Aba-aba "Mulai": berdiri, berjalan dengan kecepatan biasa dan aman sampai garis, berbalik, kembali, lalu duduk bersandar.</li>
+   <li>Stopwatch dimulai saat aba-aba dan dihentikan saat punggung menyentuh sandaran.</li>
+   <li>1 kali percobaan latihan, lalu 2–3 kali pengukuran.</li>
+  </ol></details>
+  <label>Alat bantu jalan</label><select id="tugAlat"><option value="">Tidak ada</option><option>Tongkat</option><option>Kruk</option><option>Walker</option></select>
+  <h3>Waktu (detik)</h3>
+  <div class="row3"><span></span><span class="h">Waktu (s)</span><span class="h">Keterangan</span>
+   <span>1</span><input id="tug1" type="number" inputmode="decimal" step="0.01"><input id="tugk1">
+   <span>2</span><input id="tug2" type="number" inputmode="decimal" step="0.01"><input id="tugk2">
+   <span>3</span><input id="tug3" type="number" inputmode="decimal" step="0.01"><input id="tugk3">
+  </div>
+  <label>Nilai yang dipakai</label>
+  <div class="seg"><label><input type="radio" name="tugMode" value="mean" checked><span>Rata-rata</span></label><label><input type="radio" name="tugMode" value="min"><span>Tercepat</span></label></div>
+  <h3>Observasi pola jalan (centang bila ada)</h3>
+  <label class="chk"><input type="checkbox" id="tugo1">Langkah pendek / menyeret</label>
+  <label class="chk"><input type="checkbox" id="tugo2">Goyah / kehilangan keseimbangan</label>
+  <label class="chk"><input type="checkbox" id="tugo3">Berpegangan pada dinding/benda</label>
+  <label class="chk"><input type="checkbox" id="tugo4">Berbalik lambat atau ragu-ragu</label>
+  <label class="chk"><input type="checkbox" id="tugo5">Butuh dorongan tangan untuk berdiri</label>
+  <div class="res" id="tugRes">Isi waktu tempuh.</div>
+  <label>Catatan</label><textarea id="tugCat"></textarea>
+  <p class="mut">Acuan: &lt; 10 s mobilitas normal; ≥ 13,5 s risiko jatuh tinggi pada lansia komunitas (Shumway-Cook dkk., 2000); CDC STEADI memakai ≥ 12 s; &gt; 20 s gangguan mobilitas, butuh bantuan.</p>
+ </div>
+</section>
+
+<!-- MMT -->
+<section id="mmt">
+ <div class="card">
+  <h2>Manual Muscle Testing (MMT)</h2>
+  <p class="mut">Skala Oxford/MRC 0–5. Isi hanya kelompok otot yang diperiksa; biarkan kosong yang tidak diperiksa.</p>
+  <details><summary>Definisi nilai</summary>
+   <table><tr><th>Nilai</th><th>Keterangan</th></tr>
+   <tr><td>0</td><td style="text-align:left">Tidak ada kontraksi</td></tr>
+   <tr><td>1</td><td style="text-align:left">Kontraksi teraba/terlihat tanpa gerakan sendi</td></tr>
+   <tr><td>2</td><td style="text-align:left">Gerak penuh dengan gravitasi dieliminasi</td></tr>
+   <tr><td>3</td><td style="text-align:left">Gerak penuh melawan gravitasi, tanpa tahanan</td></tr>
+   <tr><td>4</td><td style="text-align:left">Gerak penuh melawan gravitasi dengan tahanan sedang</td></tr>
+   <tr><td>5</td><td style="text-align:left">Gerak penuh melawan tahanan maksimal (normal)</td></tr></table>
+   <p class="mut">Tanda + / − dipakai untuk gradasi di antara nilai.</p>
+  </details>
+  <div id="mmtItems"></div>
+  <div class="res" id="mmtRes">Isi nilai kelompok otot yang diperiksa.</div>
+  <label>Catatan</label><textarea id="mmtCat"></textarea>
+  <p class="mut">MRC Sum Score = jumlah 12 gerakan (abduksi bahu, fleksi siku, ekstensi pergelangan, fleksi hip, ekstensi lutut, dorsifleksi ankle; kanan &amp; kiri), rentang 0–60; &lt; 48 menandakan kelemahan bermakna.</p>
+ </div>
+</section>
+
+<!-- ODI -->
+<section id="odi">
+ <div class="card">
+  <h2>Oswestry Disability Index (ODI)</h2>
+  <p class="mut">Kuesioner disabilitas akibat nyeri punggung bawah. Untuk tiap bagian, pilih SATU pernyataan yang paling menggambarkan kondisi klien hari ini.</p>
+  <div id="odiItems"></div>
+  <div class="res" id="odiRes">Isi kuesioner.</div>
+  <label>Catatan</label><textarea id="odiCat"></textarea>
+  <p class="mut">Skor = jumlah nilai ÷ (5 × jumlah bagian terisi) × 100%. Interpretasi (Fairbank): 0–20% disabilitas minimal, 21–40% sedang, 41–60% berat, 61–80% sangat berat (crippled), 81–100% terbatas di tempat tidur / perlu evaluasi gejala berlebih.</p>
+ </div>
+</section>
+
+<!-- HASIL -->
+<section id="hasil">
+ <div class="card">
+  <h2>Rekapitulasi</h2>
+  <div id="rekap"></div>
+  <label>Kesimpulan / rencana tindak lanjut</label><textarea id="kesimpulan" style="min-height:120px"></textarea>
+  <div class="btns">
+   <button class="btn" onclick="saveRecord()">Simpan Data</button>
+   <button class="btn sec" onclick="doPrint()">Cetak / PDF</button>
+  </div>
+  <div class="btns">
+   <button class="btn sec" onclick="shareCurrent()">Bagikan Ringkasan</button>
+   <button class="btn del" onclick="newForm()">Form Baru</button>
+  </div>
+ </div>
+</section>
+
+<!-- DATA -->
+<section id="data">
+ <div class="card">
+  <h2>Data Tersimpan</h2>
+  <p class="mut" id="recOwner"></p>
+  <div id="legacyBox"></div>
+  <div id="recList"></div>
+  <div class="btns"><button class="btn sec" onclick="renderRecs(true)">Muat ulang dari server</button></div>
+  <div class="btns">
+   <button class="btn" onclick="exportCSV()">Ekspor CSV (Excel)</button>
+  </div>
+  <p class="mut">Data tersimpan di akun Anda (online) dan bisa dibuka dari HP mana pun setelah login. Saat offline, data disimpan sementara di HP dan otomatis terkirim begitu ada internet. CSV disimpan di folder Download/TesFisikFisio.</p>
+ </div>
+</section>
+</main>
+
+<div class="bar">
+ <button class="btn sec" id="prevBtn" onclick="step(-1)">‹ Sebelumnya</button>
+ <button class="btn" id="nextBtn" onclick="step(1)">Berikutnya ›</button>
+</div>
+
+<div id="print"></div>
+<script src="lampung.js"></script>
+<script src="cloud.js"></script>
+
+<script>
+var $=function(id){return document.getElementById(id)};
+var TESTS=[{id:'grip',cb:'tGrip',label:'Hand Grip Strength Test',short:'Grip'},{id:'sr',cb:'tSR',label:'Sit and Reach Test',short:'S&R'},{id:'bia',cb:'tBIA',label:'Komposisi Tubuh (OnPoint Axis)',short:'BIA'},{id:'sko',cb:'tSko',label:'Scoliometer',short:'Skoliosis'},{id:'mwt',cb:'tMwt',label:'6 Minute Walk Test',short:'6MWT'},{id:'bbs',cb:'tBbs',label:'Berg Balance Scale',short:'BBS'},{id:'tug',cb:'tTug',label:'Timed Up and Go (TUG)',short:'TUG'},{id:'mmt',cb:'tMmt',label:'Manual Muscle Testing (MMT)',short:'MMT'},{id:'odi',cb:'tOdi',label:'Oswestry Disability Index (ODI)',short:'ODI'}];
+var TABS=['identitas','grip','sr','bia','sko','hasil','data'];
+(function(){document.getElementById('selList').innerHTML=TESTS.map(function(t){return '<label class="chk"><input type="checkbox" id="'+t.cb+'" onchange="setTests(selTests())">'+t.label+'</label>'}).join('')})();
+/* ================= TES TAMBAHAN: 6MWT, BBS, TUG, MMT, ODI ================= */
+var BBS_ITEMS=[
+ ['Duduk ke berdiri',['Butuh bantuan sedang–maksimal untuk berdiri','Butuh bantuan minimal untuk berdiri atau menstabilkan','Mampu berdiri dengan tangan setelah beberapa kali mencoba','Mampu berdiri mandiri menggunakan tangan','Mampu berdiri tanpa tangan dan stabil mandiri']],
+ ['Berdiri tanpa pegangan (2 menit)',['Tidak mampu berdiri 30 detik tanpa bantuan','Perlu beberapa kali mencoba untuk berdiri 30 detik tanpa pegangan','Mampu berdiri 30 detik tanpa pegangan','Mampu berdiri 2 menit dengan pengawasan','Mampu berdiri aman 2 menit']],
+ ['Duduk tanpa sandaran, kaki di lantai (2 menit)',['Tidak mampu duduk 10 detik tanpa sokongan','Mampu duduk 10 detik','Mampu duduk 30 detik','Mampu duduk 2 menit dengan pengawasan','Mampu duduk aman 2 menit']],
+ ['Berdiri ke duduk',['Butuh bantuan untuk duduk','Duduk mandiri tetapi turun tidak terkontrol','Menekankan bagian belakang tungkai ke kursi untuk mengontrol turun','Mengontrol gerak turun dengan bantuan tangan','Duduk aman dengan sedikit penggunaan tangan']],
+ ['Transfer (kursi ke kursi)',['Butuh 2 orang membantu atau mengawasi agar aman','Butuh 1 orang membantu','Mampu transfer dengan aba-aba verbal dan/atau pengawasan','Mampu transfer aman dengan bantuan tangan yang jelas','Mampu transfer aman dengan sedikit penggunaan tangan']],
+ ['Berdiri dengan mata tertutup (10 detik)',['Butuh bantuan agar tidak jatuh','Tidak mampu menutup mata 3 detik tetapi tetap stabil','Mampu berdiri 3 detik','Mampu berdiri 10 detik dengan pengawasan','Mampu berdiri aman 10 detik']],
+ ['Berdiri dengan kaki rapat (1 menit)',['Butuh bantuan memposisikan kaki dan tidak mampu bertahan 15 detik','Butuh bantuan memposisikan kaki, mampu bertahan 15 detik','Mampu merapatkan kaki mandiri tetapi tidak bertahan 30 detik','Mampu merapatkan kaki mandiri dan berdiri 1 menit dengan pengawasan','Mampu merapatkan kaki mandiri dan berdiri aman 1 menit']],
+ ['Meraih ke depan dengan lengan lurus',['Kehilangan keseimbangan / butuh sokongan eksternal','Meraih ke depan tetapi butuh pengawasan','Meraih ke depan > 5 cm dengan aman','Meraih ke depan > 12,5 cm dengan aman','Meraih ke depan > 25 cm dengan yakin']],
+ ['Mengambil benda dari lantai',['Tidak mampu mencoba / butuh bantuan agar tidak jatuh','Tidak mampu mengambil dan butuh pengawasan saat mencoba','Tidak mampu mengambil, kurang 2–5 cm, seimbang mandiri','Mampu mengambil dengan pengawasan','Mampu mengambil dengan aman dan mudah']],
+ ['Menoleh ke belakang (kiri & kanan)',['Butuh bantuan agar tidak jatuh','Butuh pengawasan saat menoleh','Hanya menoleh ke samping, keseimbangan terjaga','Melihat ke belakang dari satu sisi saja, sisi lain kurang','Melihat ke belakang dari kedua sisi, pergeseran berat badan baik']],
+ ['Berputar 360°',['Butuh bantuan saat berputar','Butuh pengawasan ketat atau aba-aba verbal','Mampu berputar 360° dengan aman tetapi lambat','Mampu berputar aman ≤ 4 detik ke satu arah saja','Mampu berputar aman ≤ 4 detik ke tiap arah']],
+ ['Menempatkan kaki bergantian di bangku',['Butuh bantuan agar tidak jatuh / tidak mampu mencoba','Mampu > 2 langkah dengan bantuan minimal','Mampu 4 langkah tanpa bantuan dengan pengawasan','Mampu 8 langkah mandiri dalam > 20 detik','Mampu 8 langkah mandiri dan aman dalam 20 detik']],
+ ['Berdiri satu kaki di depan kaki lain (tandem)',['Kehilangan keseimbangan saat melangkah atau berdiri','Butuh bantuan melangkah, mampu bertahan 15 detik','Mampu melangkah kecil mandiri dan bertahan 30 detik','Mampu menempatkan kaki di depan (tidak segaris) mandiri 30 detik','Mampu tandem (tumit menempel ujung jari) mandiri 30 detik']],
+ ['Berdiri satu kaki',['Tidak mampu mencoba / butuh bantuan agar tidak jatuh','Mencoba mengangkat kaki, tidak mampu 3 detik, tetap berdiri mandiri','Mampu mengangkat kaki mandiri ≥ 3 detik','Mampu mengangkat kaki mandiri 5–10 detik','Mampu mengangkat kaki mandiri > 10 detik']]
+];
+var MMT_GROUPS=[
+ ['Bahu',[['bhFl','Fleksi bahu'],['bhEx','Ekstensi bahu'],['bhAb','Abduksi bahu',1],['bhAd','Adduksi bahu'],['bhER','Rotasi eksternal bahu'],['bhIR','Rotasi internal bahu']]],
+ ['Siku & lengan bawah',[['skFl','Fleksi siku',1],['skEx','Ekstensi siku'],['skSu','Supinasi'],['skPr','Pronasi']]],
+ ['Pergelangan & tangan',[['pgFl','Fleksi pergelangan'],['pgEx','Ekstensi pergelangan',1],['jrFl','Fleksi jari (genggam)'],['jrAb','Abduksi jari']]],
+ ['Hip',[['hpFl','Fleksi hip',1],['hpEx','Ekstensi hip'],['hpAb','Abduksi hip'],['hpAd','Adduksi hip'],['hpER','Rotasi eksternal hip'],['hpIR','Rotasi internal hip']]],
+ ['Lutut',[['ltFl','Fleksi lutut'],['ltEx','Ekstensi lutut',1]]],
+ ['Ankle & kaki',[['akDF','Dorsifleksi ankle',1],['akPF','Plantarfleksi ankle'],['akIn','Inversi'],['akEv','Eversi'],['ibEx','Ekstensi ibu jari kaki']]]
+];
+var MMT_TRUNK=[['trFl','Fleksi trunk'],['trEx','Ekstensi trunk'],['trRo','Rotasi trunk'],['lhEx','Ekstensi leher'],['lhFl','Fleksi leher']];
+var MMT_GRADES=['0','1','2-','2','2+','3-','3','3+','4-','4','4+','5'];
+var ODI_ITEMS=[
+ ['Intensitas nyeri',['Saat ini saya tidak merasa nyeri','Nyeri sangat ringan saat ini','Nyeri sedang saat ini','Nyeri cukup berat saat ini','Nyeri sangat berat saat ini','Nyeri terburuk yang bisa dibayangkan saat ini']],
+ ['Perawatan diri (mandi, berpakaian)',['Dapat merawat diri secara normal tanpa menambah nyeri','Dapat merawat diri secara normal tetapi sangat nyeri','Merawat diri terasa nyeri, saya lambat dan hati-hati','Butuh sedikit bantuan, tetapi sebagian besar dapat sendiri','Butuh bantuan setiap hari untuk sebagian besar perawatan diri','Tidak dapat berpakaian, mandi dengan susah payah, tetap di tempat tidur']],
+ ['Mengangkat beban',['Dapat mengangkat beban berat tanpa menambah nyeri','Dapat mengangkat beban berat tetapi menambah nyeri','Nyeri menghalangi mengangkat beban berat dari lantai, tetapi bisa bila posisinya nyaman (mis. di meja)','Nyeri menghalangi mengangkat beban berat, tetapi bisa beban ringan–sedang bila posisinya nyaman','Hanya dapat mengangkat beban yang sangat ringan','Tidak dapat mengangkat atau membawa apa pun']],
+ ['Berjalan',['Nyeri tidak menghalangi berjalan sejauh apa pun','Nyeri menghalangi berjalan lebih dari 1,5 km','Nyeri menghalangi berjalan lebih dari 500 m','Nyeri menghalangi berjalan lebih dari 100 m','Hanya dapat berjalan dengan tongkat atau kruk','Sebagian besar waktu di tempat tidur']],
+ ['Duduk',['Dapat duduk di kursi apa pun selama yang saya mau','Hanya dapat duduk di kursi favorit selama yang saya mau','Nyeri menghalangi duduk lebih dari 1 jam','Nyeri menghalangi duduk lebih dari 30 menit','Nyeri menghalangi duduk lebih dari 10 menit','Nyeri menghalangi duduk sama sekali']],
+ ['Berdiri',['Dapat berdiri selama yang saya mau tanpa menambah nyeri','Dapat berdiri selama yang saya mau tetapi menambah nyeri','Nyeri menghalangi berdiri lebih dari 1 jam','Nyeri menghalangi berdiri lebih dari 30 menit','Nyeri menghalangi berdiri lebih dari 10 menit','Nyeri menghalangi berdiri sama sekali']],
+ ['Tidur',['Tidur tidak pernah terganggu oleh nyeri','Tidur kadang-kadang terganggu oleh nyeri','Karena nyeri, tidur kurang dari 6 jam','Karena nyeri, tidur kurang dari 4 jam','Karena nyeri, tidur kurang dari 2 jam','Nyeri menghalangi tidur sama sekali']],
+ ['Kehidupan seksual (bila ada)',['Normal dan tidak menambah nyeri','Normal tetapi sedikit menambah nyeri','Hampir normal tetapi sangat nyeri','Sangat terbatas karena nyeri','Hampir tidak ada karena nyeri','Tidak ada sama sekali karena nyeri'],1],
+ ['Kehidupan sosial',['Normal dan tidak menambah nyeri','Normal tetapi menambah nyeri','Tidak terpengaruh bermakna, kecuali membatasi aktivitas berat (mis. olahraga)','Nyeri membatasi kehidupan sosial, jarang keluar rumah','Kehidupan sosial terbatas di rumah','Tidak ada kehidupan sosial karena nyeri']],
+ ['Bepergian',['Dapat bepergian ke mana saja tanpa nyeri','Dapat bepergian ke mana saja tetapi menambah nyeri','Nyeri berat, tetapi dapat bepergian lebih dari 2 jam','Nyeri membatasi perjalanan kurang dari 1 jam','Nyeri membatasi hanya perjalanan penting kurang dari 30 menit','Nyeri menghalangi bepergian kecuali untuk berobat']]
+];
+(function buildNewForms(){
+ var h='';
+ BBS_ITEMS.forEach(function(it,i){
+  h+='<label>'+(i+1)+'. '+it[0]+'</label><select id="bbs'+(i+1)+'"><option value="">– pilih skor –</option>';
+  for(var sc=4;sc>=0;sc--)h+='<option value="'+sc+'">'+sc+' – '+it[1][sc]+'</option>';
+  h+='</select><div class="mut" id="bbsD'+(i+1)+'" style="margin-top:4px"></div>';
+ });
+ $('bbsItems').innerHTML=h;
+ var opts='<option value="">–</option>'+MMT_GRADES.map(function(g){return '<option>'+g+'</option>'}).join('');
+ h='';
+ MMT_GROUPS.forEach(function(g){
+  h+='<h3>'+g[0]+'</h3><div class="row3 mmtg"><span></span><span class="h">Kanan</span><span class="h">Kiri</span>';
+  g[1].forEach(function(m){h+='<span style="font-size:13px">'+m[1]+(m[2]?' <sup title="MRC sum score">MRC</sup>':'')+'</span><select id="mm_'+m[0]+'_R">'+opts+'</select><select id="mm_'+m[0]+'_L">'+opts+'</select>'});
+  h+='</div>';
+ });
+ h+='<h3>Trunk & leher</h3><div class="row3 mmtg"><span></span><span class="h">Nilai</span><span></span>';
+ MMT_TRUNK.forEach(function(m){h+='<span style="font-size:13px">'+m[1]+'</span><select id="mm_'+m[0]+'">'+opts+'</select><span></span>'});
+ h+='</div>';
+ $('mmtItems').innerHTML=h;
+ h='';
+ ODI_ITEMS.forEach(function(it,i){
+  h+='<label>'+(i+1)+'. '+it[0]+'</label><select id="odi'+(i+1)+'"><option value="">– pilih –</option>';
+  it[1].forEach(function(t,sc){h+='<option value="'+sc+'">'+sc+' – '+t+'</option>'});
+  if(it[2])h+='<option value="na">Tidak berlaku / tidak dijawab</option>';
+  h+='</select><div class="mut" id="odiD'+(i+1)+'" style="margin-top:4px"></div>';
+ });
+ $('odiItems').innerHTML=h;
+})();
+function mmtVal(g){if(g==null||g==='')return null;var n=parseInt(g,10);return n+(g.indexOf('+')>0?0.3:g.indexOf('-')>0?-0.3:0)}
+function mwtCat(pct,belowLLN){if(pct==null)return null;if(belowLLN)return {k:'Di bawah batas normal',c:'t-bad'};if(pct<80)return {k:'Menurun ringan',c:'t-warn'};return {k:'Normal',c:'t-ok'}}
+function bbsCat(t){if(t==null)return null;if(t<=20)return {k:'Risiko jatuh tinggi',c:'t-bad'};if(t<=40)return {k:'Risiko jatuh sedang',c:'t-warn'};if(t<45)return {k:'Risiko jatuh rendah, waspada (< 45)',c:'t-warn'};return {k:'Risiko jatuh rendah',c:'t-ok'}}
+function tugCat(t){if(t==null)return null;if(t<10)return {k:'Mobilitas normal',c:'t-ok'};if(t<13.5)return {k:'Mobilitas baik',c:'t-ok'};if(t<=20)return {k:'Risiko jatuh tinggi',c:'t-bad'};return {k:'Gangguan mobilitas, butuh bantuan',c:'t-bad'}}
+function odiCat(p){if(p==null)return null;if(p<=20)return {k:'Disabilitas minimal',c:'t-ok'};if(p<=40)return {k:'Disabilitas sedang',c:'t-warn'};if(p<=60)return {k:'Disabilitas berat',c:'t-bad'};if(p<=80)return {k:'Disabilitas sangat berat',c:'t-bad'};return {k:'Terbatas di tempat tidur',c:'t-bad'}}
+
+function calc2(o){
+ var s=sex(),a=age(),tb=num('tb');
+ /* 6MWT */
+ var lint=num('m6Lint')||30,laps=num('m6Laps'),ex=num('m6Extra')||0,dIn=num('m6DistIn');
+ o.m6Dist=dIn!=null?dIn:(laps!=null?laps*lint+ex:null);
+ var bb=num('m6BB')!=null?num('m6BB'):num('bb');
+ o.m6Pred=null;o.m6Pct=null;o.m6LLN=null;o.m6Below=false;
+ if(o.m6Dist!=null&&s&&a&&tb&&bb){
+  o.m6Pred=s==='L'?7.57*tb-5.02*a-1.76*bb-309:2.11*tb-2.29*bb-5.78*a+667;
+  o.m6LLN=o.m6Pred-(s==='L'?153:139);o.m6Pct=o.m6Dist/o.m6Pred*100;o.m6Below=o.m6Dist<o.m6LLN;
+ }
+ o.m6VO2=o.m6Dist!=null?0.03*o.m6Dist+3.98:null;
+ o.m6c=mwtCat(o.m6Pct,o.m6Below);
+ var h=[];
+ if(o.m6Dist==null)h.push('Isi jarak tempuh.');
+ else{
+  h.push('Jarak tempuh: <b>'+f1(o.m6Dist)+' m</b>'+(o.m6c?' '+tag(o.m6c):''));
+  if(o.m6Pred!=null)h.push('Prediksi: '+f1(o.m6Pred)+' m · <b>'+f1(o.m6Pct)+'%</b> prediksi · batas bawah normal '+f1(o.m6LLN)+' m');
+  else h.push('<span class="mut">Isi jenis kelamin, usia, tinggi badan, dan berat badan untuk nilai prediksi.</span>');
+  h.push('Estimasi VO₂peak: '+f1(o.m6VO2)+' ml/kg/menit');
+ }
+ var hr1=num('m6HR1'),o0=num('m6O0'),o1=num('m6O1');
+ if(hr1&&a)h.push('Nadi akhir: '+Math.round(hr1/(220-a)*100)+'% dari nadi maksimal prediksi (220 − usia)');
+ if(o0!=null&&o1!=null){var dd=o0-o1;h.push('Perubahan SpO₂: '+(dd>0?'−':'+')+f1(Math.abs(dd))+'%'+(dd>=4||o1<90?' <span class="tag t-bad">Desaturasi bermakna</span>':''))}
+ if(num('m6S0')>180||num('m6D0')>100||num('m6HR0')>120)h.push('<span class="tag t-warn">Perhatian: tanda vital awal melewati batas kontraindikasi relatif</span>');
+ $('m6Res').innerHTML=h.join('<br>');
+ /* BBS */
+ var tot=0,n=0;for(var i=1;i<=14;i++){var x=$('bbs'+i).value;$('bbsD'+i).textContent=x!==''?BBS_ITEMS[i-1][1][+x]:'';if(x!==''){tot+=+x;n++}}
+ o.bbsN=n;o.bbsTot=n?tot:null;o.bbsc=n===14?bbsCat(tot):null;
+ $('bbsRes').innerHTML=n?'Total: <b>'+tot+' / 56</b> '+(n<14?'<span class="mut">('+n+'/14 item terisi)</span>':tag(o.bbsc)):'Isi skor tiap item.';
+ /* TUG */
+ var tv=[num('tug1'),num('tug2'),num('tug3')].filter(function(x){return x!=null});
+ o.tug=tv.length?(radio('tugMode')==='min'?Math.min.apply(null,tv):tv.reduce(function(p,q){return p+q},0)/tv.length):null;
+ o.tugc=tugCat(o.tug);
+ var obs=['tugo1','tugo2','tugo3','tugo4','tugo5'].filter(function(k){return $(k).checked}).length;o.tugObs=obs;
+ $('tugRes').innerHTML=o.tug==null?'Isi waktu tempuh.':'Waktu TUG ('+(radio('tugMode')==='min'?'tercepat':'rata-rata '+tv.length+' kali')+'): <b>'+(Math.round(o.tug*100)/100).toString().replace('.',',')+' detik</b> '+tag(o.tugc)+(obs?'<br>Observasi: '+obs+' tanda gangguan pola jalan':'')+($('tugAlat').value?'<br>Dengan alat bantu: '+$('tugAlat').value:'');
+ /* MMT */
+ var weak=[],asym=[],filled=0,mrc=0,mrcN=0;
+ MMT_GROUPS.forEach(function(g){g[1].forEach(function(m){
+  var R=$('mm_'+m[0]+'_R').value,L=$('mm_'+m[0]+'_L').value,vr=mmtVal(R),vl=mmtVal(L);
+  if(vr!=null){filled++;if(vr<4)weak.push(m[1]+' kanan ('+R+')')}
+  if(vl!=null){filled++;if(vl<4)weak.push(m[1]+' kiri ('+L+')')}
+  if(vr!=null&&vl!=null&&Math.abs(Math.floor(vr+0.31)-Math.floor(vl+0.31))>=1)asym.push(m[1]+' ('+R+' / '+L+')');
+  if(m[2]){if(vr!=null){mrc+=parseInt(R,10);mrcN++}if(vl!=null){mrc+=parseInt(L,10);mrcN++}}
+ })});
+ MMT_TRUNK.forEach(function(m){var g=$('mm_'+m[0]).value,vv=mmtVal(g);if(vv!=null){filled++;if(vv<4)weak.push(m[1]+' ('+g+')')}});
+ o.mmtFilled=filled;o.mmtWeak=weak;o.mmtAsym=asym;o.mrc=mrcN===12?mrc:null;
+ if(!filled)$('mmtRes').innerHTML='Isi nilai kelompok otot yang diperiksa.';
+ else $('mmtRes').innerHTML=filled+' pemeriksaan terisi.<br>'+(weak.length?'Nilai &lt; 4: <b>'+weak.join(', ')+'</b>':'Tidak ada nilai &lt; 4.')+
+  (asym.length?'<br>Asimetri kanan–kiri ≥ 1 tingkat: '+asym.join(', '):'')+
+  '<br>MRC Sum Score: '+(o.mrc!=null?'<b>'+o.mrc+' / 60</b> '+(o.mrc<48?'<span class="tag t-bad">Kelemahan bermakna (&lt; 48)</span>':'<span class="tag t-ok">≥ 48</span>'):'<span class="mut">'+mrcN+'/12 gerakan MRC terisi</span>');
+ /* ODI */
+ var os=0,on=0,oa=0;for(var j=1;j<=10;j++){var y=$('odi'+j).value;$('odiD'+j).textContent=y===''||y==='na'?'':ODI_ITEMS[j-1][1][+y];if(y!==''){oa++;if(y!=='na'){os+=+y;on++}}}
+ o.odiN=on;o.odi=on?os/(5*on)*100:null;o.odic=oa===10||on>=9?odiCat(o.odi):null;
+ $('odiRes').innerHTML=on?'Skor: <b>'+os+' / '+(5*on)+' = '+f1(o.odi)+'%</b> '+(o.odic?tag(o.odic):'<span class="mut">('+oa+'/10 bagian terisi)</span>'):'Isi kuesioner.';
+}
+function rows2(o,rows){
+ if(has('mwt'))rows.push(['6MWT jarak',o.m6Dist==null?'–':f1(o.m6Dist)+' m'+(o.m6Pct!=null?' ('+f1(o.m6Pct)+'% pred.)':''),tag(o.m6c)]);
+ if(has('bbs'))rows.push(['Berg Balance Scale',o.bbsTot==null?'–':o.bbsTot+' / 56',tag(o.bbsc)]);
+ if(has('tug'))rows.push(['Timed Up and Go',o.tug==null?'–':f1(o.tug)+' s',tag(o.tugc)]);
+ if(has('mmt'))rows.push(['MMT',o.mmtFilled?(o.mmtWeak.length+' nilai < 4'+(o.mrc!=null?'; MRC '+o.mrc+'/60':'')):'–',o.mmtFilled?(o.mmtWeak.length?'<span class="tag t-warn">Ada kelemahan</span>':'<span class="tag t-ok">Normal/baik</span>'):'–']);
+ if(has('odi'))rows.push(['Oswestry (ODI)',o.odi==null?'–':f1(o.odi)+' %',tag(o.odic)]);
+}
+function sum2(o,sm){
+ sm.m6Dist=o.m6Dist;sm.m6Pred=o.m6Pred;sm.m6Pct=o.m6Pct;sm.m6LLN=o.m6LLN;sm.m6c=o.m6c&&o.m6c.k;sm.m6VO2=o.m6VO2;
+ sm.bbsTot=o.bbsTot;sm.bbsc=o.bbsc&&o.bbsc.k;sm.tug=o.tug;sm.tugc=o.tugc&&o.tugc.k;sm.tugObs=o.tugObs;
+ sm.mmtWeak=o.mmtWeak.join(', ');sm.mmtAsym=o.mmtAsym.join(', ');sm.mrc=o.mrc;sm.odi=o.odi;sm.odic=o.odic&&o.odic.k;
+}
+function share2(o){var t='';
+ if(has('mwt'))t+='6MWT: '+f1(o.m6Dist)+' m'+(o.m6Pct!=null?' ('+f1(o.m6Pct)+'% prediksi)':'')+(o.m6c?' – '+o.m6c.k:'')+'\n';
+ if(has('bbs'))t+='Berg Balance Scale: '+(o.bbsTot==null?'-':o.bbsTot+'/56')+(o.bbsc?' – '+o.bbsc.k:'')+'\n';
+ if(has('tug'))t+='TUG: '+f1(o.tug)+' detik'+(o.tugc?' – '+o.tugc.k:'')+'\n';
+ if(has('mmt'))t+='MMT: '+(o.mmtWeak.length?'nilai < 4: '+o.mmtWeak.join(', '):'tidak ada nilai < 4')+(o.mrc!=null?'; MRC '+o.mrc+'/60':'')+'\n';
+ if(has('odi'))t+='ODI: '+f1(o.odi)+'%'+(o.odic?' – '+o.odic.k:'')+'\n';
+ return t}
+function print2(o,L,k){var h='';
+ function tr(a,b){return '<tr><td style="width:45%">'+a+'</td><td>'+b+'</td></tr>'}
+ if(has('mwt')){h+='<h2>'+L()+'6 Minute Walk Test</h2><table>'+tr('Panjang lintasan',(num('m6Lint')||30)+' m')+tr('Lintasan + sisa',v('m6Laps')+' lintasan + '+v('m6Extra')+' m')+tr('<b>Jarak tempuh</b>','<b>'+f1(o.m6Dist)+' m</b> ('+k(o.m6c)+')')+tr('Prediksi / % prediksi / batas bawah',o.m6Pred==null?'–':f1(o.m6Pred)+' m / '+f1(o.m6Pct)+'% / '+f1(o.m6LLN)+' m')+tr('Estimasi VO₂peak',f1(o.m6VO2)+' ml/kg/menit')+tr('Berhenti',v('m6Stop')+' kali, '+v('m6StopDur')+' detik')+tr('Alat bantu / O₂',($('m6Alat').value||'Tidak ada')+' / '+($('m6Oks').value||'Tidak'))+tr('Dihentikan dini',$('m6Early').checked?'Ya – '+v('m6Alasan'):'Tidak')+'</table>'+
+  '<table><tr><th>Tanda vital</th><th>Sebelum</th><th>Sesudah</th></tr>'+[['Nadi (x/mnt)','m6HR'],['SpO₂ (%)','m6O'],['TD (mmHg)',''],['Borg sesak','m6B'],['Borg lelah','m6F']].map(function(r){return r[1]?'<tr><td>'+r[0]+'</td><td>'+v(r[1]+'0')+'</td><td>'+v(r[1]+'1')+'</td></tr>':'<tr><td>'+r[0]+'</td><td>'+v('m6S0')+'/'+v('m6D0')+'</td><td>'+v('m6S1')+'/'+v('m6D1')+'</td></tr>'}).join('')+'</table><p>Catatan: '+v('m6Cat')+'</p>'}
+ if(has('bbs')){h+='<h2>'+L()+'Berg Balance Scale</h2><table><tr><th>No</th><th>Item</th><th>Skor</th></tr>'+BBS_ITEMS.map(function(it,i){return '<tr><td>'+(i+1)+'</td><td>'+it[0]+'</td><td>'+v('bbs'+(i+1))+'</td></tr>'}).join('')+'<tr><td></td><td><b>Total</b></td><td><b>'+(o.bbsTot==null?'–':o.bbsTot+' / 56')+'</b></td></tr></table><p>Interpretasi: '+k(o.bbsc)+'. Catatan: '+v('bbsCat')+'</p>'}
+ if(has('tug')){var ob=[['tugo1','langkah pendek/menyeret'],['tugo2','goyah'],['tugo3','berpegangan'],['tugo4','berbalik lambat'],['tugo5','butuh dorongan tangan']].filter(function(x){return $(x[0]).checked}).map(function(x){return x[1]});
+  h+='<h2>'+L()+'Timed Up and Go</h2><table><tr><th>Percobaan</th><th>Waktu (s)</th><th>Keterangan</th></tr>'+[1,2,3].map(function(i){return '<tr><td>'+i+'</td><td>'+v('tug'+i)+'</td><td>'+v('tugk'+i)+'</td></tr>'}).join('')+'<tr><td><b>'+(radio('tugMode')==='min'?'Tercepat':'Rata-rata')+'</b></td><td colspan="2"><b>'+f1(o.tug)+' s</b> ('+k(o.tugc)+')</td></tr></table><p>Alat bantu: '+($('tugAlat').value||'tidak ada')+'. Observasi: '+(ob.length?ob.join(', '):'tidak ada temuan')+'. Catatan: '+v('tugCat')+'</p>'}
+ if(has('mmt')){var rr='';MMT_GROUPS.forEach(function(g){g[1].forEach(function(m){var R=$('mm_'+m[0]+'_R').value,Lf=$('mm_'+m[0]+'_L').value;if(R||Lf)rr+='<tr><td>'+m[1]+'</td><td>'+(R||'–')+'</td><td>'+(Lf||'–')+'</td></tr>'})});
+  MMT_TRUNK.forEach(function(m){var g=$('mm_'+m[0]).value;if(g)rr+='<tr><td>'+m[1]+'</td><td colspan="2">'+g+'</td></tr>'});
+  h+='<h2>'+L()+'Manual Muscle Testing (Oxford/MRC 0–5)</h2>'+(rr?'<table><tr><th>Gerakan</th><th>Kanan</th><th>Kiri</th></tr>'+rr+'</table>':'<p>–</p>')+'<p>Nilai &lt; 4: '+(o.mmtWeak.length?o.mmtWeak.join(', '):'tidak ada')+'. Asimetri: '+(o.mmtAsym.length?o.mmtAsym.join(', '):'tidak ada')+'. MRC Sum Score: '+(o.mrc!=null?o.mrc+'/60':'–')+'. Catatan: '+v('mmtCat')+'</p>'}
+ if(has('odi')){h+='<h2>'+L()+'Oswestry Disability Index</h2><table><tr><th>Bagian</th><th>Pernyataan terpilih</th><th>Skor</th></tr>'+ODI_ITEMS.map(function(it,i){var y=$('odi'+(i+1)).value;return '<tr><td>'+(i+1)+'. '+it[0]+'</td><td>'+(y===''?'–':y==='na'?'Tidak berlaku':esc(it[1][+y]))+'</td><td>'+(y===''||y==='na'?'–':y)+'</td></tr>'}).join('')+'<tr><td colspan="2"><b>Skor ODI</b></td><td><b>'+(o.odi==null?'–':f1(o.odi)+'%')+'</b></td></tr></table><p>Interpretasi: '+k(o.odic)+'. Catatan: '+v('odiCat')+'</p>'}
+ return h}
+var CSV2=(function(){var c=[],g={};function add(grp,k,l){c.push([k,l]);g[k]=grp}
+ [['m6Lint','6MWT lintasan'],['m6Laps','6MWT jml lintasan'],['m6Extra','6MWT sisa'],['m6DistIn','6MWT jarak input'],['$m6Dist','6MWT jarak (m)'],['$m6Pred','6MWT prediksi'],['$m6Pct','6MWT % prediksi'],['$m6LLN','6MWT batas bawah'],['$m6c','Kat. 6MWT'],['$m6VO2','VO2peak est.'],['m6BB','6MWT BB'],['m6HR0','Nadi pre'],['m6HR1','Nadi post'],['m6O0','SpO2 pre'],['m6O1','SpO2 post'],['m6S0','Sistol pre'],['m6D0','Diastol pre'],['m6S1','Sistol post'],['m6D1','Diastol post'],['m6B0','Borg sesak pre'],['m6B1','Borg sesak post'],['m6F0','Borg lelah pre'],['m6F1','Borg lelah post'],['m6Stop','Jml berhenti'],['m6StopDur','Lama berhenti (s)'],['m6Alat','6MWT alat bantu'],['m6Oks','O2 tambahan'],['m6Early','Dihentikan dini'],['m6Alasan','Alasan berhenti'],['m6Cat','Catatan 6MWT']].forEach(function(x){add('mwt',x[0],x[1])});
+ for(var i=1;i<=14;i++)add('bbs','bbs'+i,'BBS '+i);
+ [['$bbsTot','BBS total'],['$bbsc','Kat. BBS'],['bbsCat','Catatan BBS']].forEach(function(x){add('bbs',x[0],x[1])});
+ [['tugAlat','TUG alat bantu'],['tug1','TUG 1'],['tug2','TUG 2'],['tug3','TUG 3'],['r_tugMode','Mode TUG'],['$tug','TUG (s)'],['$tugc','Kat. TUG'],['$tugObs','TUG tanda gangguan jalan'],['tugCat','Catatan TUG']].forEach(function(x){add('tug',x[0],x[1])});
+ MMT_GROUPS.forEach(function(gr){gr[1].forEach(function(m){add('mmt','mm_'+m[0]+'_R','MMT '+m[1]+' Ka');add('mmt','mm_'+m[0]+'_L','MMT '+m[1]+' Ki')})});
+ MMT_TRUNK.forEach(function(m){add('mmt','mm_'+m[0],'MMT '+m[1])});
+ [['$mrc','MRC sum score'],['$mmtWeak','MMT nilai < 4'],['$mmtAsym','MMT asimetri'],['mmtCat','Catatan MMT']].forEach(function(x){add('mmt',x[0],x[1])});
+ for(var j=1;j<=10;j++)add('odi','odi'+j,'ODI '+j);
+ [['$odi','ODI (%)'],['$odic','Kat. ODI'],['odiCat','Catatan ODI']].forEach(function(x){add('odi',x[0],x[1])});
+ return {cols:c,grp:g}})();
+/* ================= /TES TAMBAHAN ================= */
+
+/* ---------- alamat (Lampung) ---------- */
+function optList(arr,ph){return '<option value="">'+ph+'</option>'+arr.map(function(n){return '<option>'+esc(n)+'</option>'}).join('')}
+function kabObj(){var k=$('kab').value;return WIL_LAMPUNG.find(function(x){return x[0]===k})}
+function kecObj(){var kb=kabObj();if(!kb)return null;var c=$('kec').value;return kb[1].find(function(x){return x[0]===c})}
+function fillKec(){var kb=kabObj();$('kec').innerHTML=kb?optList(kb[1].map(function(x){return x[0]}),'– pilih –'):'<option value="">– pilih kab/kota dulu –</option>';fillKel()}
+function fillKel(){var kc=kecObj();$('kel').innerHTML=kc?optList(kc[1],'– pilih –'):'<option value="">– pilih kecamatan dulu –</option>'}
+function setAddr(kab,kec,kel){$('kab').value=kab||'';fillKec();$('kec').value=kec||'';fillKel();$('kel').value=kel||''}
+(function(){$('kab').innerHTML=optList(WIL_LAMPUNG.map(function(x){return x[0]}),'– pilih –');
+ $('kab').addEventListener('change',fillKec);$('kec').addEventListener('change',fillKel)})();
+function alamatLengkap(){var a=[$('alamat').value,$('kel').value&&('Kel./Desa '+$('kel').value),$('kec').value&&('Kec. '+$('kec').value),$('kab').value,$('kab').value?'Lampung':''].filter(function(x){return x});return a.join(', ')}
+function fixNav(){var h=document.querySelector('header');document.getElementById('tabs').style.top=h.offsetHeight+'px'}
+window.addEventListener('resize',fixNav);setTimeout(fixNav,0);document.querySelector('.hlogo').addEventListener('load',fixNav);
+function selTests(){return TESTS.filter(function(t){return $(t.cb).checked}).map(function(t){return t.id})}
+function has(id){return selTests().indexOf(id)>=0}
+function setTests(a,silent){TESTS.forEach(function(t){$(t.cb).checked=a.indexOf(t.id)>=0});updateTabs();if(!silent){calc();saveDraft()}}
+function updateTabs(){var sel=selTests();TABS=['identitas'].concat(sel).concat(['hasil','data']);
+ document.querySelectorAll('#tabs button').forEach(function(b){b.style.display=TABS.indexOf(b.dataset.t)>=0?'':'none'});
+ if(ME)store('lastTests_'+ME.uid,sel);
+ if(cur&&TABS.indexOf(cur)<0)go('identitas');
+ var i=TABS.indexOf(cur);if($('prevBtn')){$('prevBtn').style.visibility=i>0?'visible':'hidden';$('nextBtn').style.visibility=i<TABS.length-1?'visible':'hidden'}}
+var cur='identitas', editingId=null;
+
+/* ---------- Norma hand grip (CAMRY) ---------- [min usia, max usia, batas bawah normal, batas atas normal] */
+var GRIP={
+ L:[[10,11,12.6,22.4],[12,13,19.4,31.2],[14,15,28.5,44.3],[16,17,32.6,52.4],[18,19,35.7,55.5],[20,24,36.8,56.6],[25,29,37.7,57.5],[30,34,36.0,55.8],[35,39,35.8,55.6],[40,44,35.5,55.3],[45,49,34.7,54.5],[50,54,32.9,50.7],[55,59,30.7,48.5],[60,64,30.2,48.0],[65,69,28.2,44.0],[70,120,21.3,35.1]],
+ P:[[10,11,11.8,21.6],[12,13,14.6,24.4],[14,15,15.5,27.3],[16,17,17.2,29.0],[18,19,19.2,31.0],[20,24,21.5,35.3],[25,29,25.6,41.4],[30,34,21.5,35.3],[35,39,20.3,34.1],[40,44,18.9,32.7],[45,49,18.6,32.4],[50,54,18.1,31.9],[55,59,17.7,31.5],[60,64,17.2,31.0],[65,69,15.4,27.2],[70,120,14.7,24.5]]
+};
+function gripCat(v,sex,age){
+ if(v==null||!sex||!age)return null;
+ var t=GRIP[sex],r=null;for(var i=0;i<t.length;i++)if(age>=t[i][0]&&age<=t[i][1])r=t[i];
+ if(!r)return {k:'Di luar rentang usia norma',c:''};
+ if(v<r[2])return {k:'Lemah',c:'t-bad',r:r};
+ if(v>r[3])return {k:'Kuat',c:'t-pri',r:r};
+ return {k:'Normal',c:'t-ok',r:r};
+}
+/* ---------- Norma sit and reach ---------- */
+var SR={L:[27,17,6,0,-8,-19],P:[30,21,11,1,-7,-14]};
+var SRK=[['Sangat baik sekali','t-pri'],['Sangat baik','t-ok'],['Baik','t-ok'],['Sedang','t-warn'],['Kurang','t-warn'],['Buruk','t-bad'],['Sangat buruk','t-bad']];
+function srCat(v,sex){
+ if(v==null||!sex)return null;
+ var t=SR[sex],i;
+ if(v>t[0])i=0;else{for(i=1;i<t.length;i++)if(v>=t[i])break;}
+ return {k:SRK[i][0],c:SRK[i][1]};
+}
+function bmiCat(b){
+ if(b==null)return null;
+ if(b<18.5)return {k:'Berat badan kurang',c:'t-warn'};
+ if(b<23)return {k:'Normal',c:'t-ok'};
+ if(b<25)return {k:'Berisiko / overweight',c:'t-warn'};
+ if(b<30)return {k:'Obesitas I',c:'t-bad'};
+ return {k:'Obesitas II',c:'t-bad'};
+}
+function viscCat(v){ if(v==null)return null; if(v<10)return {k:'Normal',c:'t-ok'}; if(v<15)return {k:'Tinggi',c:'t-warn'}; return {k:'Sangat tinggi',c:'t-bad'}; }
+function fatCat(v,sex){ if(v==null||!sex)return null; var lo=sex==='L'?10:20,hi=sex==='L'?20:30;
+ if(v<lo)return {k:'Di bawah rentang',c:'t-warn'}; if(v<=hi)return {k:'Normal',c:'t-ok'}; if(v<=hi+5)return {k:'Di atas rentang',c:'t-warn'}; return {k:'Tinggi',c:'t-bad'}; }
+function waterCat(v,sex){ if(v==null||!sex)return null; var lo=sex==='L'?50:45,hi=sex==='L'?65:60;
+ if(v<lo)return {k:'Di bawah rentang',c:'t-warn'}; if(v<=hi)return {k:'Normal',c:'t-ok'}; return {k:'Di atas rentang',c:'t-warn'}; }
+function atrCat(v){ if(v==null)return null; if(v<5)return {k:'Normal',c:'t-ok',t:'tidak perlu tindak lanjut khusus'}; if(v<7)return {k:'Asimetri ringan',c:'t-warn',t:'observasi, ulangi pemeriksaan 3–6 bulan'}; return {k:'Curiga skoliosis',c:'t-bad',t:'rujuk dokter untuk foto rontgen (sudut Cobb)'}; }
+function tag(c){return c?'<span class="tag '+c.c+'">'+c.k+'</span>':'–'}
+
+/* ---------- helpers ---------- */
+function num(id){var v=$(id).value;if(v===''||v==null)return null;var n=parseFloat(String(v).replace(',','.'));return isNaN(n)?null:n}
+function radio(n){var e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:''}
+function f1(v){return v==null?'–':(Math.round(v*10)/10).toString().replace('.',',')}
+function sex(){return radio('jk')}
+function age(){return num('usia')}
+
+/* ---------- compute ---------- */
+function calc(){
+ var o={},s=sex(),a=age();
+ // skrining
+ var sk=['sk1','sk2','sk3','sk4','sk5','sk6'].filter(function(k){return $(k).checked});
+ $('skWarn').innerHTML=sk.length?'<div class="res" style="background:#FFF4E0">⚠ Ada '+sk.length+' item skrining tercentang. Pertimbangkan menunda tes terkait'+($('sk5').checked||$('sk6').checked?'; <b>BIA tidak dianjurkan</b> (implan elektronik/hamil)':'')+'.</div>':'';
+ // grip
+ function side(p){var v=[num(p+'1'),num(p+'2'),num(p+'3')].filter(function(x){return x!=null});
+  if(!v.length)return null; if(radio('gripMode')==='mean')return v.reduce(function(a,b){return a+b},0)/v.length; return Math.max.apply(null,v);}
+ o.gR=side('gr');o.gL=side('gl');
+ o.gRc=gripCat(o.gR,s,a);o.gLc=gripCat(o.gL,s,a);
+ var h='';
+ if(o.gR==null&&o.gL==null)h='Isi hasil percobaan.';
+ else{
+  h='Kanan: <b>'+f1(o.gR)+' kg</b> '+tag(o.gRc)+'<br>Kiri: <b>'+f1(o.gL)+' kg</b> '+tag(o.gLc);
+  if(o.gR!=null&&o.gL!=null){var d=o.gR-o.gL,mx=Math.max(o.gR,o.gL);h+='<br>Selisih kanan–kiri: '+f1(Math.abs(d))+' kg ('+f1(mx?Math.abs(d)/mx*100:0)+'%)';}
+  var r=(o.gRc&&o.gRc.r)||(o.gLc&&o.gLc.r);
+  if(r)h+='<br><span class="mut">Rentang normal usia '+r[0]+'–'+(r[1]>100?'99':r[1])+' th: '+f1(r[2])+'–'+f1(r[3])+' kg</span>';
+  if(!s||!a)h+='<br><span class="mut">Isi jenis kelamin dan usia untuk kategori.</span>';
+  if(a>=60&&s){var cut=s==='L'?28:18,best=Math.max(o.gR||0,o.gL||0);
+   o.awgs=best<cut?'Rendah (< '+cut+' kg)':'Tidak rendah';
+   h+='<br>Skrining sarkopenia AWGS 2019: '+(best<cut?'<span class="tag t-bad">Kekuatan genggam rendah</span>':'<span class="tag t-ok">Tidak rendah</span>');}
+ }
+ $('gripRes').innerHTML=h;
+ // sit and reach
+ var off=num('srOffset')||0,raw=[num('sr1'),num('sr2'),num('sr3')].filter(function(x){return x!=null});
+ o.srBest=raw.length?Math.max.apply(null,raw)-off:null;
+ o.src=srCat(o.srBest,s);
+ $('srRes').innerHTML=o.srBest==null?'Isi hasil percobaan.':'Hasil terbaik (terkoreksi): <b>'+(o.srBest>0?'+':'')+f1(o.srBest)+' cm</b> '+tag(o.src)+(s?'':'<br><span class="mut">Isi jenis kelamin untuk kategori.</span>');
+ // bia
+ var bb=num('bb'),tb=num('tb');o.bmi=num('bmi');o.bmiAuto=false;
+ if(o.bmi==null&&bb&&tb){o.bmi=bb/Math.pow(tb/100,2);o.bmiAuto=true;}
+ o.bmic=bmiCat(o.bmi);o.viscc=viscCat(num('visc'));o.fatc=fatCat(num('fat'),s);o.airc=waterCat(num('air'),s);
+ var bh=[];
+ if(o.bmi!=null)bh.push('IMT: <b>'+f1(o.bmi)+'</b>'+(o.bmiAuto?' <span class="mut">(dihitung)</span>':'')+' '+tag(o.bmic));
+ if(num('fat')!=null)bh.push('Lemak tubuh: <b>'+f1(num('fat'))+'%</b> '+tag(o.fatc));
+ if(num('visc')!=null)bh.push('Lemak viseral: <b>'+f1(num('visc'))+'</b> '+tag(o.viscc));
+ if(num('air')!=null)bh.push('Air tubuh: <b>'+f1(num('air'))+'%</b> '+tag(o.airc));
+ var bk=['bk1','bk2','bk3','bk4','bk5','bk6','bk7','bk8'].filter(function(k){return !$(k).checked}).length;
+ if(bh.length&&bk)bh.push('<span class="mut">'+bk+' syarat kondisi pengukuran belum dicentang — hasil BIA bisa kurang akurat.</span>');
+ $('biaRes').innerHTML=bh.length?bh.join('<br>'):'Isi berat badan dan tinggi badan.';
+ // scoliometer
+ var REG=[['T','Torakal'],['TL','Torako-lumbal'],['L','Lumbal']];
+ o.atr={};var atrMax=null,atrReg='';
+ REG.forEach(function(r){
+  var a=[num('atr'+r[0]+'1'),num('atr'+r[0]+'2')].filter(function(x){return x!=null});
+  var m=a.length?Math.max.apply(null,a):null;o.atr[r[0]]=m;
+  if(m!=null&&(atrMax==null||m>atrMax)){atrMax=m;atrReg=r[1]+($('atr'+r[0]+'s').value?' '+$('atr'+r[0]+'s').value.toLowerCase():'')}
+ });
+ o.atrMax=atrMax;o.atrReg=atrReg;o.atrc=atrCat(atrMax);
+ var po=['po1','po2','po3','po4','po5','po6'].filter(function(k){return $(k).checked}).length;o.po=po;
+ if(atrMax==null)$('skoRes').innerHTML='Isi hasil pengukuran ATR.'+(po?'<br>Observasi postur: '+po+' tanda asimetri.':'');
+ else{var sh=[];REG.forEach(function(r){if(o.atr[r[0]]!=null)sh.push(r[1]+': <b>'+f1(o.atr[r[0]])+'°</b>'+($('atr'+r[0]+'s').value?' ('+$('atr'+r[0]+'s').value.toLowerCase()+')':'')+' '+tag(atrCat(o.atr[r[0]])))});
+  sh.push('ATR maksimal: <b>'+f1(atrMax)+'°</b> – '+atrReg+' '+tag(o.atrc));
+  sh.push('<span class="mut">Tindak lanjut: '+o.atrc.t+'</span>');
+  if(po)sh.push('Observasi postur: '+po+' tanda asimetri.');
+  $('skoRes').innerHTML=sh.join('<br>');}
+ calc2(o);
+ // rekap
+ var rows=[];
+ if(has('grip')){rows.push(['Hand grip kanan',o.gR==null?'–':f1(o.gR)+' kg',tag(o.gRc)],['Hand grip kiri',o.gL==null?'–':f1(o.gL)+' kg',tag(o.gLc)]);if(o.awgs)rows.push(['AWGS 2019',o.awgs,''])}
+ if(has('sr'))rows.push(['Sit and reach',o.srBest==null?'–':f1(o.srBest)+' cm',tag(o.src)]);
+ if(has('bia'))rows.push(['IMT',o.bmi==null?'–':f1(o.bmi)+' kg/m²',tag(o.bmic)],['Lemak tubuh',num('fat')==null?'–':f1(num('fat'))+' %',tag(o.fatc)],['Lemak viseral',num('visc')==null?'–':'level '+f1(num('visc')),tag(o.viscc)],['Massa otot',num('otot')==null?'–':f1(num('otot'))+' kg','']);
+ if(has('sko'))rows.push(['Scoliometer (ATR maks.)',o.atrMax==null?'–':f1(o.atrMax)+'° '+o.atrReg,tag(o.atrc)]);
+ rows2(o,rows);
+ if(!rows.length)rows.push(['<i>Belum ada tes dipilih (lihat tab Identitas)</i>','','']);
+ $('rekap').innerHTML='<p style="margin:0 0 6px"><b>'+($('nama').value||'(tanpa nama)')+'</b> · '+(s==='L'?'Laki-laki':s==='P'?'Perempuan':'–')+' · '+(a||'–')+' th</p><table><tr><th>Pemeriksaan</th><th>Hasil</th><th>Kategori</th></tr>'+
+  rows.map(function(r){return '<tr><td style="text-align:left">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>'}).join('')+'</table>';
+ return o;
+}
+
+/* ---------- norm table render ---------- */
+function renderGripNorm(){
+ var h='<table><tr><th rowspan="2">Usia</th><th colspan="2">Laki-laki (normal)</th><th colspan="2">Perempuan (normal)</th></tr><tr><th>min</th><th>maks</th><th>min</th><th>maks</th></tr>';
+ for(var i=0;i<GRIP.L.length;i++){var l=GRIP.L[i],p=GRIP.P[i];h+='<tr><td>'+l[0]+(l[1]>100?'+':'–'+l[1])+'</td><td>'+f1(l[2])+'</td><td>'+f1(l[3])+'</td><td>'+f1(p[2])+'</td><td>'+f1(p[3])+'</td></tr>';}
+ $('gripNorm').innerHTML=h+'</table><p class="mut">&lt; min = Lemah, &gt; maks = Kuat.</p>';
+}
+
+/* ---------- state ---------- */
+function fields(){return Array.prototype.slice.call(document.querySelectorAll('main input, main textarea, main select')).filter(function(e){return e.id||e.name})}
+function collect(){var d={};fields().forEach(function(e){if(e.type==='radio'){if(e.checked)d['r_'+e.name]=e.value}else if(e.type==='checkbox')d[e.id]=e.checked;else d[e.id]=e.value});return d}
+function fill(d){fields().forEach(function(e){if(e.type==='radio')e.checked=d['r_'+e.name]===e.value||(!d['r_'+e.name]&&((e.name==='gripMode'&&e.value==='max')||(e.name==='skoPos'&&e.value==='Berdiri')||(e.name==='tugMode'&&e.value==='mean')));else if(e.type==='checkbox')e.checked=!!d[e.id];else e.value=d[e.id]!=null?d[e.id]:(e.id==='srOffset'?'0':'')});
+ setAddr(d.kab,d.kec,d.kel);$('prov').value='Lampung';
+ if(d.tGrip===undefined){var all=TESTS.map(function(t){return t.id});setTests(Object.keys(d).length?['grip','sr','bia','sko']:(ME?load('lastTests_'+ME.uid,all):all),true)}else updateTabs();
+ calc()}
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function load(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}}
+function saveDraft(){if(ME)store('draft_'+ME.uid,{d:collect(),id:editingId})}
+function toast(m){if(window.Android&&Android.toast)Android.toast(m);else alert(m)}
+function today(){var t=new Date();return t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2)}
+function nowTime(){var t=new Date();return ('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2)}
+
+var REC=[];
+function buildRec(){
+ var d=collect(),o=calc();
+ var rec={id:editingId||('r'+Date.now()),saved:new Date().toISOString(),by:ME?ME.username:'',d:d,
+  sum:{gR:o.gR,gL:o.gL,gRc:o.gRc&&o.gRc.k,gLc:o.gLc&&o.gLc.k,awgs:o.awgs||'',sr:o.srBest,src:o.src&&o.src.k,bmi:o.bmi,bmic:o.bmic&&o.bmic.k,fatc:o.fatc&&o.fatc.k,viscc:o.viscc&&o.viscc.k,airc:o.airc&&o.airc.k,atrT:o.atr.T,atrTL:o.atr.TL,atrL:o.atr.L,atrMax:o.atrMax,atrReg:o.atrReg,atrc:o.atrc&&o.atrc.k,po:o.po}};
+ sum2(o,rec.sum);return rec;
+}
+function saveRecord(){
+ var d=collect();if(!d.nama&&!d.no){toast('Isi nama atau no. responden dulu');go('identitas');return}
+ if(!selTests().length){toast('Pilih minimal satu tes yang dilakukan');go('identitas');return}
+ var rec=buildRec();
+ var i=REC.findIndex(function(r){return r.id===rec.id});if(i>=0)REC[i]=rec;else REC.unshift(rec);
+ editingId=rec.id;saveDraft();
+ Cloud.save(rec).then(function(st){toast(st==='synced'?'Data tersimpan ke akun':'Offline: data disimpan di HP, akan terkirim otomatis saat online')}).catch(function(e){toast('Gagal menyimpan: '+e.message)});
+}
+function newForm(){if(!confirm('Kosongkan form untuk klien baru? Pastikan data sudah disimpan.'))return;resetForm();saveDraft();go('identitas')}
+function resetForm(){editingId=null;fill({});$('tglperiksa').value=today();$('jam').value=nowTime();if(ME&&ME.nama)$('pemeriksa').value=ME.nama}
+function openRec(id){var r=REC.find(function(x){return x.id===id});if(!r)return;editingId=id;fill(r.d);saveDraft();go('identitas');toast('Data dibuka untuk diedit')}
+function delRec(id){if(!confirm('Hapus data ini dari akun?'))return;REC=REC.filter(function(x){return x.id!==id});if(editingId===id)editingId=null;drawRecs();
+ Cloud.remove(id).catch(function(e){toast('Gagal menghapus: '+e.message)})}
+function renderRecs(force){
+ if(!ME)return;
+ if(force||!REC.loaded){$('recList').innerHTML='<p class="mut">Memuat data…</p>';
+  return Cloud.list().then(function(l){REC=l;REC.loaded=true;drawRecs()}).catch(function(e){$('recList').innerHTML='<p class="err">'+esc(e.message)+'</p>'})}
+ drawRecs();return Promise.resolve();
+}
+function drawRecs(){
+ var recs=REC;
+ $('recOwner').innerHTML='Akun: <b>'+esc(ME.username)+'</b> · '+recs.length+' pengukuran';
+ $('recList').innerHTML=recs.length?recs.map(function(r){return '<div class="rec"><div><b>'+esc(r.d.nama||'(tanpa nama)')+'</b> '+(r.d.no?'· '+esc(r.d.no):'')+'<br><small>'+(r.d.tglperiksa||r.saved.slice(0,10))+' · '+(r.d.r_jk||'-')+' · '+(r.d.usia||'-')+' th'+(r.d.kec?' · '+esc(r.d.kec):'')+'<br>'+esc(testsOf(r.d))+'</small></div><button onclick="openRec(\''+r.id+'\')">Buka</button><button class="x" onclick="delRec(\''+r.id+'\')">Hapus</button></div>'}).join(''):'<p class="mut">Belum ada data tersimpan di akun ini.</p>';
+ drawLegacy();
+}
+function testsOf(d){var old=d.tGrip===undefined;return TESTS.filter(function(t){return old?['grip','sr','bia','sko'].indexOf(t.id)>=0:!!d[t.cb]}).map(function(t){return t.short}).join(' · ')}
+/* data lama (versi sebelum login) */
+function legacyRecs(){var a=[];try{if(window.Android&&Android.getLegacy)a=JSON.parse(Android.getLegacy()||'[]')}catch(e){}if(!a.length)a=load('records',[]);return a}
+function drawLegacy(){var a=legacyRecs();$('legacyBox').innerHTML=a.length?'<div class="res" style="background:#FFF4E0">Ada '+a.length+' data dari versi lama (sebelum login). <div class="btns"><button class="btn" onclick="uploadLegacy()">Pindahkan ke akun ini</button></div></div>':''}
+function uploadLegacy(){var a=legacyRecs();if(!a.length)return;if(!confirm('Pindahkan '+a.length+' data lama ke akun '+ME.username+'?'))return;
+ Promise.all(a.map(function(r){r.by=ME.username;if(!REC.find(function(x){return x.id===r.id}))REC.unshift(r);return Cloud.save(r)})).then(function(){
+  try{localStorage.removeItem('records')}catch(e){} if(window.Android&&Android.clearLegacy)Android.clearLegacy();
+  REC.sort(function(x,y){return x.saved<y.saved?1:-1});drawRecs();toast('Data lama dipindahkan')}).catch(function(e){toast('Gagal: '+e.message)})}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+/* ---------- export ---------- */
+var CSV_COLS=[['no','No'],['nama','Nama'],['r_jk','JK'],['tgllahir','Tgl lahir'],['usia','Usia'],['tb','TB (cm)'],['dominan','Dominan'],['prov','Provinsi'],['kab','Kab/Kota'],['kec','Kecamatan'],['kel','Kel/Desa'],['alamat','Alamat'],['hp','No HP'],['pekerjaan','Pekerjaan'],['riwayat','Riwayat'],['tglperiksa','Tgl periksa'],['jam','Jam'],['pemeriksa','Pemeriksa'],['$$by','Akun'],
+ ['gripAlat','Dinamometer'],['gr1','Grip R1'],['gr2','Grip R2'],['gr3','Grip R3'],['gl1','Grip L1'],['gl2','Grip L2'],['gl3','Grip L3'],['r_gripMode','Mode grip'],['$gR','Grip kanan'],['$gRc','Kat. kanan'],['$gL','Grip kiri'],['$gLc','Kat. kiri'],['$awgs','AWGS'],
+ ['srOffset','SR offset'],['sr1','SR1'],['sr2','SR2'],['sr3','SR3'],['$sr','SR terbaik'],['$src','Kat. SR'],
+ ['bb','BB (kg)'],['$bmi','IMT'],['$bmic','Kat. IMT'],['fat','Lemak %'],['$fatc','Kat. lemak'],['subq','Subkutan %'],['visc','Viseral'],['$viscc','Kat. viseral'],['otot','Otot kg'],['smr','SMR %'],['ffm','FFM kg'],['tulang','Tulang kg'],['air','Air %'],['$airc','Kat. air'],['protein','Protein %'],['bmr','BMR'],['bodyage','Usia tubuh'],
+ ['skoAlat','Scoliometer'],['r_skoPos','Posisi ATR'],['atrT1','ATR T1'],['atrT2','ATR T2'],['atrTs','Sisi T'],['$atrT','ATR torakal'],['atrTL1','ATR TL1'],['atrTL2','ATR TL2'],['atrTLs','Sisi TL'],['$atrTL','ATR torakolumbal'],['atrL1','ATR L1'],['atrL2','ATR L2'],['atrLs','Sisi L'],['$atrL','ATR lumbal'],['$atrMax','ATR maks'],['$atrReg','Regio ATR maks'],['$atrc','Kat. ATR'],['$po','Tanda asimetri postur'],['lld','Beda panjang tungkai'],
+ ['gripCat','Catatan grip'],['srCat','Catatan SR'],['biaCat','Catatan BIA'],['skoCat','Catatan skoliosis'],['kesimpulan','Kesimpulan']];
+var COLGRP={};[['grip',['gripAlat','gr1','gr2','gr3','gl1','gl2','gl3','r_gripMode','$gR','$gRc','$gL','$gLc','$awgs','gripCat']],['sr',['srOffset','sr1','sr2','sr3','$sr','$src','srCat']],
+ ['bia',['bb','$bmi','$bmic','fat','$fatc','subq','visc','$viscc','otot','smr','ffm','tulang','air','$airc','protein','bmr','bodyage','biaCat']],['sko',['skoAlat','r_skoPos','atrT1','atrT2','atrTs','$atrT','atrTL1','atrTL2','atrTLs','$atrTL','atrL1','atrL2','atrLs','$atrL','$atrMax','$atrReg','$atrc','$po','lld','skoCat']]].forEach(function(g){g[1].forEach(function(k){COLGRP[k]=g[0]})});
+CSV_COLS.splice(13,0,['$$tests','Tes dilakukan']);
+(function(){var i=CSV_COLS.findIndex(function(c){return c[0]==='gripCat'});Array.prototype.splice.apply(CSV_COLS,[i,0].concat(CSV2.cols));for(var k in CSV2.grp)COLGRP[k]=CSV2.grp[k]})();
+function colVal(r,k){if(k==='$$by')return r.by;if(k==='$$tests')return testsOf(r.d);var g=COLGRP[k];if(g){var t=TESTS.find(function(x){return x.id===g});if(r.d[t.cb]===false)return ''}return k[0]==='$'?r.sum[k.slice(1)]:r.d[k]}
+function cell(v){if(v==null)v='';if(v===true)v='Ya';if(v===false)v='';if(typeof v==='number')v=(Math.round(v*100)/100).toString();v=String(v);if(/^-?\d+(\.\d+)?$/.test(v))v=v.replace('.',',');return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function exportCSV(){
+ renderRecs().then(function(){exportCSV2()})}
+function exportCSV2(){
+ var recs=REC;if(!recs.length){toast('Belum ada data');return}
+ var lines=[CSV_COLS.map(function(c){return c[1]}).join(';')];
+ recs.slice().reverse().forEach(function(r){lines.push(CSV_COLS.map(function(c){return cell(colVal(r,c[0]))}).join(';'))});
+ var csv='sep=;\n'+lines.join('\n'),name='tes-fisik-'+today()+'-'+Date.now().toString().slice(-4)+'-'+(ME?ME.username:'')+'.csv';
+ if(window.Android&&Android.saveFile){var p=Android.saveFile(name,'text/csv',csv);
+  if(p&&p!=='ERR'&&p!=='UNSUPPORTED'){toast('Tersimpan: '+p);return}
+  Android.shareText('Data Tes Fisik',csv);return}
+ var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'}));a.download=name;a.click();
+}
+function shareCurrent(){
+ var o=calc(),s=sex(),t='HASIL PEMERIKSAAN TES FISIK\n'+($('nama').value||'-')+' ('+(s||'-')+', '+(age()||'-')+' th) · '+($('tglperiksa').value||'')+'\n\n'+
+ (has('grip')?'Hand grip kanan: '+f1(o.gR)+' kg ('+(o.gRc?o.gRc.k:'-')+')\nHand grip kiri: '+f1(o.gL)+' kg ('+(o.gLc?o.gLc.k:'-')+')\n'+(o.awgs?'AWGS 2019: '+o.awgs+'\n':''):'')+
+ (has('sr')?'Sit and reach: '+f1(o.srBest)+' cm ('+(o.src?o.src.k:'-')+')\n':'')+
+ (has('bia')?'IMT: '+f1(o.bmi)+' ('+(o.bmic?o.bmic.k:'-')+')\nLemak tubuh: '+f1(num('fat'))+'%\nLemak viseral: '+f1(num('visc'))+'\nMassa otot: '+f1(num('otot'))+' kg\n':'')+
+ (has('sko')?'Scoliometer (ATR maks.): '+(o.atrMax==null?'-':f1(o.atrMax)+'° '+o.atrReg+' ('+o.atrc.k+')')+'\n':'')+share2(o)+'\nKesimpulan: '+($('kesimpulan').value||'-')+'\nPemeriksa: '+($('pemeriksa').value||'-');
+ if(window.Android&&Android.shareText)Android.shareText('Hasil Tes Fisik',t);else if(navigator.share)navigator.share({text:t});else alert(t);
+}
+
+/* ---------- print ---------- */
+function v(id){var x=$(id).value;return x?esc(x):'–'}
+function doPrint(){
+ var o=calc(),s=sex();
+ function tr(a,b){return '<tr><td style="width:40%">'+a+'</td><td>'+b+'</td></tr>'}
+ function k(c){return c?c.k:'–'}
+ var sk=[['sk1','Nyeri/cedera akut tangan–pergelangan'],['sk2','Nyeri punggung bawah akut/HNP'],['sk3','Pasca operasi < 3 bulan'],['sk4','Hipertensi tidak terkontrol'],['sk5','Alat pacu jantung/implan'],['sk6','Hamil']].filter(function(x){return $(x[0]).checked}).map(function(x){return x[1]});
+ var li=0;function L(){return 'ABCDEFGHIJKLMN'[li++]+'. '}
+ var h='<div style="text-align:center"><img src="logo.png" style="height:70px"></div><h1>FORM PEMERIKSAAN TES FISIK</h1><div class="sub">'+TESTS.filter(function(t){return has(t.id)}).map(function(t){return t.label}).join(' · ')+'<br>Prodi D3 Fisioterapi – FIKes Universitas Muhammadiyah Metro</div>'+
+ '<h2>'+L()+'Identitas Klien</h2><table>'+tr('No. Responden/RM',v('no'))+tr('Nama',v('nama'))+tr('Jenis kelamin',s==='L'?'Laki-laki':s==='P'?'Perempuan':'–')+tr('Tanggal lahir / Usia',v('tgllahir')+' / '+v('usia')+' th')+tr('Alamat',esc(alamatLengkap())||'–')+tr('No. HP',v('hp'))+tr('Tinggi badan',v('tb')+' cm')+tr('Tangan dominan',v('dominan'))+tr('Pekerjaan/olahraga',v('pekerjaan'))+tr('Riwayat',v('riwayat'))+tr('Tanggal & jam',v('tglperiksa')+' '+v('jam'))+tr('Pemeriksa',v('pemeriksa'))+tr('Skrining keamanan',sk.length?sk.join(', '):'Tidak ada')+'</table>'+
+ (has('grip')?'<h2>'+L()+'Hand Grip Strength Test</h2><table><tr><th>Percobaan</th><th>Kanan (kg)</th><th>Kiri (kg)</th></tr>'+[1,2,3].map(function(i){return '<tr><td>'+i+'</td><td>'+v('gr'+i)+'</td><td>'+v('gl'+i)+'</td></tr>'}).join('')+
+ '<tr><td><b>'+(radio('gripMode')==='mean'?'Rata-rata':'Tertinggi')+'</b></td><td><b>'+f1(o.gR)+'</b> ('+k(o.gRc)+')</td><td><b>'+f1(o.gL)+'</b> ('+k(o.gLc)+')</td></tr></table>'+
+ (o.awgs?'<p>Skrining sarkopenia AWGS 2019: '+o.awgs+'</p>':'')+'<p>Alat: '+v('gripAlat')+'. Catatan: '+v('gripCat')+'</p>':'')+
+ (has('sr')?'<h2>'+L()+'Sit and Reach Test</h2><table><tr><th>Percobaan</th><th>Jangkauan (cm)</th><th>Keterangan</th></tr>'+[1,2,3].map(function(i){return '<tr><td>'+i+'</td><td>'+v('sr'+i)+'</td><td>'+v('srk'+i)+'</td></tr>'}).join('')+
+ '<tr><td><b>Terbaik (terkoreksi)</b></td><td colspan="2"><b>'+f1(o.srBest)+' cm</b> ('+k(o.src)+')</td></tr></table><p>Posisi telapak kaki: '+v('srOffset')+' cm. Keluhan: '+v('srCat')+'</p>':'')+
+ (has('bia')?'<h2>'+L()+'Komposisi Tubuh – OnPoint Axis</h2><table><tr><th>Parameter</th><th>Hasil</th><th>Kategori</th></tr>'+
+ [['Berat badan',v('bb')+' kg',''],['IMT',f1(o.bmi)+' kg/m²',k(o.bmic)],['Lemak tubuh',v('fat')+' %',k(o.fatc)],['Lemak subkutan',v('subq')+' %',''],['Lemak viseral',v('visc'),k(o.viscc)],['Massa otot',v('otot')+' kg',''],['Skeletal muscle rate',v('smr')+' %',''],['Fat-free mass',v('ffm')+' kg',''],['Massa tulang',v('tulang')+' kg',''],['Air tubuh',v('air')+' %',k(o.airc)],['Protein',v('protein')+' %',''],['BMR',v('bmr')+' kkal',''],['Usia tubuh/metabolik',v('bodyage')+' th','']].map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+(r[2]||'')+'</td></tr>'}).join('')+'</table><p>Catatan: '+v('biaCat')+'</p>':'')+
+ (has('sko')?'<h2>'+L()+'Pemeriksaan Skoliosis – Scoliometer</h2>'+
+ '<p>Alat: '+v('skoAlat')+'. Posisi: '+(radio('skoPos')||'–')+'. Beda panjang tungkai: '+v('lld')+' cm.</p>'+
+ '<p>Observasi postur: '+(function(){var a=[['po1','tinggi bahu'],['po2','skapula'],['po3','segitiga pinggang'],['po4','tinggi panggul'],['po5','plumb line'],['po6','lengkung tulang belakang']].filter(function(x){return $(x[0]).checked}).map(function(x){return x[1]});return a.length?'asimetri '+a.join(', '):'simetris'})()+'</p>'+
+ '<table><tr><th>Regio</th><th>Ukur 1</th><th>Ukur 2</th><th>Sisi</th><th>ATR</th><th>Kategori</th></tr>'+
+ [['T','Torakal'],['TL','Torako-lumbal'],['L','Lumbal']].map(function(r){return '<tr><td>'+r[1]+'</td><td>'+v('atr'+r[0]+'1')+'</td><td>'+v('atr'+r[0]+'2')+'</td><td>'+v('atr'+r[0]+'s')+'</td><td>'+(o.atr[r[0]]==null?'–':f1(o.atr[r[0]])+'°')+'</td><td>'+k(atrCat(o.atr[r[0]]))+'</td></tr>'}).join('')+
+ '</table><p>ATR maksimal: '+(o.atrMax==null?'–':f1(o.atrMax)+'° ('+o.atrReg+') – '+o.atrc.k+'; '+o.atrc.t)+'. Catatan: '+v('skoCat')+'</p>':'')+
+ print2(o,L,k)+
+ '<h2>'+L()+'Kesimpulan / Rencana Tindak Lanjut</h2><p style="min-height:50px;white-space:pre-wrap">'+v('kesimpulan')+'</p>'+
+ '<div class="sign"><div>Klien / Responden<br><br><br><br>( '+v('nama')+' )</div><div>Metro, '+v('tglperiksa')+'<br>Pemeriksa<br><br><br>( '+v('pemeriksa')+' )</div></div>';
+ $('print').innerHTML=h;
+ var job='Tes-Fisik-'+($('nama').value||'klien').replace(/\s+/g,'-');
+ if(window.Android&&Android.print)Android.print(job);else window.print();
+}
+
+/* ---------- nav ---------- */
+function go(t){cur=t;document.querySelectorAll('section').forEach(function(s){s.classList.toggle('on',s.id===t)});
+ document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);if(b.dataset.t===t)b.scrollIntoView({inline:'center',block:'nearest'})});
+ var i=TABS.indexOf(t);$('prevBtn').style.visibility=i>0?'visible':'hidden';$('nextBtn').style.visibility=i<TABS.length-1?'visible':'hidden';
+ if(t==='data')renderRecs();calc();window.scrollTo(0,0)}
+function step(d){var i=TABS.indexOf(cur)+d;if(i>=0&&i<TABS.length)go(TABS[i])}
+window.handleBack=function(){var o=document.querySelector('#serverOv.on,#pwOv.on');if(o&&ME){o.classList.remove('on');return 'stay'}if(!ME)return 'exit';if(cur!=='identitas'){step(-1);return 'stay'}return 'exit'};
+document.querySelectorAll('#tabs button').forEach(function(b){b.onclick=function(){go(b.dataset.t)}});
+
+$('tgllahir').addEventListener('change',function(){var b=new Date(this.value),t=$('tglperiksa').value?new Date($('tglperiksa').value):new Date();
+ if(!isNaN(b)){var a=t.getFullYear()-b.getFullYear();if(t.getMonth()<b.getMonth()||(t.getMonth()===b.getMonth()&&t.getDate()<b.getDate()))a--;$('usia').value=a}});
+document.querySelector('main').addEventListener('input',function(){calc();saveDraft()});
+document.querySelector('main').addEventListener('change',function(){calc();saveDraft()});
+
+renderGripNorm();
+/* ---------- akun ---------- */
+var APP_VERSION='3.2 (15 Nov 2026)';
+if('serviceWorker' in navigator&&location.protocol==='https:'&&location.hostname!=='app.local'){navigator.serviceWorker.register('sw.js').catch(function(){})}
+var DEFAULT_CONFIG={apiKey:"AIzaSyDm_HcF1wc8oK7lahzJQCJCTlvrZJXJsJc",authDomain:"fisioterapi-ummetro.firebaseapp.com",projectId:"fisioterapi-ummetro",storageBucket:"fisioterapi-ummetro.firebasestorage.app",messagingSenderId:"411291393908",appId:"1:411291393908:web:0a2e99907fc6357a88d621"}; /* bisa diisi konfigurasi Firebase bawaan saat build */
+var ME=null;
+function getConfig(){return load('fbConfig',null)||DEFAULT_CONFIG}
+function parseConfig(t){
+ var o={};['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId','measurementId'].forEach(function(k){
+  var m=t.match(new RegExp('["\']?'+k+'["\']?\\s*:\\s*["\']([^"\']+)["\']'));if(m)o[k]=m[1]});
+ return (o.apiKey&&o.projectId&&o.appId)?o:null}
+function showServer(){var c=getConfig();$('cfgText').value=c?JSON.stringify(c,null,2):'';$('cfgErr').textContent='';$('cfgNow').textContent=c?'Server saat ini: '+c.projectId:'Belum ada server.';$('serverOv').classList.add('on')}
+function closeServer(){$('serverOv').classList.remove('on')}
+function saveServer(){var c=parseConfig($('cfgText').value);if(!c){$('cfgErr').textContent='Konfigurasi tidak valid. Pastikan ada apiKey, projectId, dan appId.';return}
+ var old=getConfig();store('fbConfig',c);
+ if(window.Cloud&&Cloud.ready&&(!old||old.projectId!==c.projectId)){toast('Server diganti. Aplikasi dimuat ulang.');setTimeout(function(){location.reload()},600);return}
+ closeServer();startCloud()}
+function authMode(){var up=radio('authMode')==='up';['upOnly1','upOnly2','upHint'].forEach(function(i){$(i).style.display=up?'block':'none'});$('aBtn').textContent=up?'Daftar & Masuk':'Masuk';$('aErr').textContent='';$('aPass').autocomplete=up?'new-password':'current-password'}
+function busy(b,on,txt){b.disabled=on;b.style.opacity=on?.6:1;if(txt)b.textContent=txt}
+function doAuth(){
+ if(!getConfig()){$('aErr').textContent='Server belum diatur. Ketuk "Pengaturan server".';return}
+ var up=radio('authMode')==='up',u=$('aUser').value.trim().toLowerCase(),p=$('aPass').value,b=$('aBtn');
+ if(!u||!p){$('aErr').textContent='Isi username dan password.';return}
+ if(up){if(!Cloud.validUsername(u)){$('aErr').textContent='Username 3–30 karakter: huruf kecil, angka, titik, garis bawah, atau strip.';return}
+  if(p.length<6){$('aErr').textContent='Password minimal 6 karakter.';return}
+  if(p!==$('aPass2').value){$('aErr').textContent='Ulangi password tidak sama.';return}}
+ $('aErr').textContent='';var lbl=b.textContent;busy(b,true,'Memproses…');
+ (up?Cloud.register(u,p,$('aNama').value.trim()):Cloud.login(u,p)).catch(function(e){$('aErr').textContent=e.message}).then(function(){busy(b,false,lbl)})}
+function onLogin(u){
+ ME=u;REC=[];REC.loaded=false;
+ if(!u){document.querySelector('input[name=authMode][value=in]').checked=true;authMode();$('aPass').value='';$('authOv').classList.add('on');$('userBtn').textContent='👤';$('menu').classList.remove('on');return}
+ $('authOv').classList.remove('on');$('aPass').value=$('aPass2').value='';
+ $('userBtn').textContent='👤 '+u.username;$('menuInfo').innerHTML='Masuk sebagai <b>'+esc(u.username)+'</b>'+(u.nama?'<br>'+esc(u.nama):'')+'<br><span style="font-size:11px">Versi '+APP_VERSION+(location.hostname==='app.local'?' · mode offline bawaan':'')+'</span>';
+ var dr=load('draft_'+u.uid,null);
+ if(dr&&dr.d){editingId=dr.id||null;fill(dr.d)}else resetForm();
+ go('identitas');renderRecs();
+}
+function toggleMenu(){if(ME)$('menu').classList.toggle('on')}
+function doLogout(){$('menu').classList.remove('on');if(!confirm('Keluar dari akun '+ME.username+'?'))return;saveDraft();Cloud.logout()}
+function showPw(){['pwOld','pwNew','pwNew2'].forEach(function(i){$(i).value=''});$('pwErr').textContent='';$('pwOv').classList.add('on')}
+function doChangePw(){var n=$('pwNew').value;if(n.length<6){$('pwErr').textContent='Password baru minimal 6 karakter.';return}if(n!==$('pwNew2').value){$('pwErr').textContent='Ulangi password tidak sama.';return}
+ Cloud.changePassword($('pwOld').value,n).then(function(){$('pwOv').classList.remove('on');toast('Password diganti')}).catch(function(e){$('pwErr').textContent=e.message})}
+document.addEventListener('click',function(e){if(!e.target.closest('#menu')&&e.target.id!=='userBtn')$('menu').classList.remove('on')});
+function startCloud(){
+ var c=getConfig();$('authOv').classList.add('on');
+ if(!c){showServer();return}
+ if(!window.Cloud){$('aErr').textContent='Modul server gagal dimuat.';return}
+ if(!Cloud.ready){try{Cloud.init(c,window.EMU?{emulator:window.EMU}:null)}catch(e){$('aErr').textContent='Konfigurasi server salah: '+e.message;return}
+  Cloud.onUser(onLogin)}
+}
+fill({});
+startCloud();
+</script>
+</body>
+</html>
