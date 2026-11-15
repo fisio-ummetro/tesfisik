@@ -419,7 +419,7 @@ nav button{color:#b9c6e6}
   <label>Alasan berhenti / keluhan</label><input id="m6Alasan">
   <div class="res" id="m6Res">Isi jarak tempuh.</div>
   <label>Catatan</label><textarea id="m6Cat"></textarea>
-  <p class="mut">Prediksi jarak: Enright &amp; Sherrill (1998). Laki-laki = 7,57×TB − 5,02×usia − 1,76×BB − 309; perempuan = 2,11×TB − 2,29×BB − 5,78×usia + 667 (m). Batas bawah normal = prediksi − 153 m (L) / − 139 m (P). Estimasi VO₂peak = 0,03×jarak + 3,98 (Cahalin, 1996). Persamaan dari populasi dewasa Amerika; gunakan sebagai acuan.</p>
+  <p class="mut">Prediksi jarak: Enright &amp; Sherrill (1998). Laki-laki = 7,57×TB − 5,02×usia − 1,76×BB − 309; perempuan = 2,11×TB − 2,29×BB − 5,78×usia + 667 (m). Batas bawah normal = prediksi − 153 m (L) / − 139 m (P). Estimasi VO₂peak = 0,03×jarak + 3,98 (Cahalin, 1996). Tingkat kapasitas fungsional menurut jarak (Bittner dkk., 1993): tingkat 1 &lt; 300 m, tingkat 2 300–374 m, tingkat 3 375–449 m, tingkat 4 ≥ 450 m. Persamaan dari populasi dewasa Amerika; gunakan sebagai acuan.</p>
  </div>
 </section>
 
@@ -619,7 +619,8 @@ var ODI_ITEMS=[
  $('odiItems').innerHTML=h;
 })();
 function mmtVal(g){if(g==null||g==='')return null;var n=parseInt(g,10);return n+(g.indexOf('+')>0?0.3:g.indexOf('-')>0?-0.3:0)}
-function mwtCat(pct,belowLLN){if(pct==null)return null;if(belowLLN)return {k:'Di bawah batas normal',c:'t-bad'};if(pct<80)return {k:'Menurun ringan',c:'t-warn'};return {k:'Normal',c:'t-ok'}}
+function mwtCat(pct,belowLLN){if(pct==null)return null;if(belowLLN)return {k:'Di bawah normal (< batas bawah)',c:'t-bad'};if(pct<80)return {k:'Normal-rendah (< 80% prediksi)',c:'t-warn'};return {k:'Normal',c:'t-ok'}}
+function mwtLevel(d){if(d==null)return null;if(d<300)return {k:'Tingkat 1: kapasitas sangat rendah (< 300 m)',c:'t-bad'};if(d<375)return {k:'Tingkat 2: kapasitas rendah (300–374 m)',c:'t-warn'};if(d<450)return {k:'Tingkat 3: kapasitas sedang (375–449 m)',c:'t-warn'};return {k:'Tingkat 4: kapasitas baik (≥ 450 m)',c:'t-ok'}}
 function bbsCat(t){if(t==null)return null;if(t<=20)return {k:'Risiko jatuh tinggi',c:'t-bad'};if(t<=40)return {k:'Risiko jatuh sedang',c:'t-warn'};if(t<45)return {k:'Risiko jatuh rendah, waspada (< 45)',c:'t-warn'};return {k:'Risiko jatuh rendah',c:'t-ok'}}
 function tugCat(t){if(t==null)return null;if(t<10)return {k:'Mobilitas normal',c:'t-ok'};if(t<13.5)return {k:'Mobilitas baik',c:'t-ok'};if(t<=20)return {k:'Risiko jatuh tinggi',c:'t-bad'};return {k:'Gangguan mobilitas, butuh bantuan',c:'t-bad'}}
 function odiCat(p){if(p==null)return null;if(p<=20)return {k:'Disabilitas minimal',c:'t-ok'};if(p<=40)return {k:'Disabilitas sedang',c:'t-warn'};if(p<=60)return {k:'Disabilitas berat',c:'t-bad'};if(p<=80)return {k:'Disabilitas sangat berat',c:'t-bad'};return {k:'Terbatas di tempat tidur',c:'t-bad'}}
@@ -636,13 +637,15 @@ function calc2(o){
   o.m6LLN=o.m6Pred-(s==='L'?153:139);o.m6Pct=o.m6Dist/o.m6Pred*100;o.m6Below=o.m6Dist<o.m6LLN;
  }
  o.m6VO2=o.m6Dist!=null?0.03*o.m6Dist+3.98:null;
- o.m6c=mwtCat(o.m6Pct,o.m6Below);
+ o.m6pc=mwtCat(o.m6Pct,o.m6Below);o.m6lv=mwtLevel(o.m6Dist);o.m6c=o.m6pc||o.m6lv;
  var h=[];
  if(o.m6Dist==null)h.push('Isi jarak tempuh.');
  else{
-  h.push('Jarak tempuh: <b>'+f1(o.m6Dist)+' m</b>'+(o.m6c?' '+tag(o.m6c):''));
+  h.push('Jarak tempuh: <b>'+f1(o.m6Dist)+' m</b>');
+  if(o.m6pc)h.push('Kategori (% prediksi): '+tag(o.m6pc));
+  h.push('Tingkat kapasitas fungsional: '+tag(o.m6lv));
   if(o.m6Pred!=null)h.push('Prediksi: '+f1(o.m6Pred)+' m · <b>'+f1(o.m6Pct)+'%</b> prediksi · batas bawah normal '+f1(o.m6LLN)+' m');
-  else h.push('<span class="mut">Isi jenis kelamin, usia, tinggi badan, dan berat badan untuk nilai prediksi.</span>');
+  else{var miss=[];if(!s)miss.push('jenis kelamin');if(!a)miss.push('usia');if(!tb)miss.push('tinggi badan (tab Identitas)');if(!bb)miss.push('berat badan');h.push('<span class="mut">Kategori % prediksi belum bisa dihitung. Lengkapi: '+miss.join(', ')+'.</span>')}
   h.push('Estimasi VO₂peak: '+f1(o.m6VO2)+' ml/kg/menit');
  }
  var hr1=num('m6HR1'),o0=num('m6O0'),o1=num('m6O1');
@@ -681,19 +684,19 @@ function calc2(o){
  $('odiRes').innerHTML=on?'Skor: <b>'+os+' / '+(5*on)+' = '+f1(o.odi)+'%</b> '+(o.odic?tag(o.odic):'<span class="mut">('+oa+'/10 bagian terisi)</span>'):'Isi kuesioner.';
 }
 function rows2(o,rows){
- if(has('mwt'))rows.push(['6MWT jarak',o.m6Dist==null?'–':f1(o.m6Dist)+' m'+(o.m6Pct!=null?' ('+f1(o.m6Pct)+'% pred.)':''),tag(o.m6c)]);
+ if(has('mwt'))rows.push(['6MWT jarak',o.m6Dist==null?'–':f1(o.m6Dist)+' m'+(o.m6Pct!=null?' ('+f1(o.m6Pct)+'% pred.)':''),(o.m6pc?tag(o.m6pc)+' ':'')+tag(o.m6lv)]);
  if(has('bbs'))rows.push(['Berg Balance Scale',o.bbsTot==null?'–':o.bbsTot+' / 56',tag(o.bbsc)]);
  if(has('tug'))rows.push(['Timed Up and Go',o.tug==null?'–':f1(o.tug)+' s',tag(o.tugc)]);
  if(has('mmt'))rows.push(['MMT',o.mmtFilled?(o.mmtWeak.length+' nilai < 4'+(o.mrc!=null?'; MRC '+o.mrc+'/60':'')):'–',o.mmtFilled?(o.mmtWeak.length?'<span class="tag t-warn">Ada kelemahan</span>':'<span class="tag t-ok">Normal/baik</span>'):'–']);
  if(has('odi'))rows.push(['Oswestry (ODI)',o.odi==null?'–':f1(o.odi)+' %',tag(o.odic)]);
 }
 function sum2(o,sm){
- sm.m6Dist=o.m6Dist;sm.m6Pred=o.m6Pred;sm.m6Pct=o.m6Pct;sm.m6LLN=o.m6LLN;sm.m6c=o.m6c&&o.m6c.k;sm.m6VO2=o.m6VO2;
+ sm.m6Dist=o.m6Dist;sm.m6Pred=o.m6Pred;sm.m6Pct=o.m6Pct;sm.m6LLN=o.m6LLN;sm.m6c=o.m6pc&&o.m6pc.k;sm.m6lv=o.m6lv&&o.m6lv.k;sm.m6VO2=o.m6VO2;
  sm.bbsTot=o.bbsTot;sm.bbsc=o.bbsc&&o.bbsc.k;sm.tug=o.tug;sm.tugc=o.tugc&&o.tugc.k;sm.tugObs=o.tugObs;
  sm.mmtWeak=o.mmtWeak.join(', ');sm.mmtAsym=o.mmtAsym.join(', ');sm.mrc=o.mrc;sm.odi=o.odi;sm.odic=o.odic&&o.odic.k;
 }
 function share2(o){var t='';
- if(has('mwt'))t+='6MWT: '+f1(o.m6Dist)+' m'+(o.m6Pct!=null?' ('+f1(o.m6Pct)+'% prediksi)':'')+(o.m6c?' – '+o.m6c.k:'')+'\n';
+ if(has('mwt'))t+='6MWT: '+f1(o.m6Dist)+' m'+(o.m6Pct!=null?' ('+f1(o.m6Pct)+'% prediksi)':'')+(o.m6pc?' – '+o.m6pc.k:'')+(o.m6lv?'; '+o.m6lv.k:'')+'\n';
  if(has('bbs'))t+='Berg Balance Scale: '+(o.bbsTot==null?'-':o.bbsTot+'/56')+(o.bbsc?' – '+o.bbsc.k:'')+'\n';
  if(has('tug'))t+='TUG: '+f1(o.tug)+' detik'+(o.tugc?' – '+o.tugc.k:'')+'\n';
  if(has('mmt'))t+='MMT: '+(o.mmtWeak.length?'nilai < 4: '+o.mmtWeak.join(', '):'tidak ada nilai < 4')+(o.mrc!=null?'; MRC '+o.mrc+'/60':'')+'\n';
@@ -701,7 +704,7 @@ function share2(o){var t='';
  return t}
 function print2(o,L,k){var h='';
  function tr(a,b){return '<tr><td style="width:45%">'+a+'</td><td>'+b+'</td></tr>'}
- if(has('mwt')){h+='<h2>'+L()+'6 Minute Walk Test</h2><table>'+tr('Panjang lintasan',(num('m6Lint')||30)+' m')+tr('Lintasan + sisa',v('m6Laps')+' lintasan + '+v('m6Extra')+' m')+tr('<b>Jarak tempuh</b>','<b>'+f1(o.m6Dist)+' m</b> ('+k(o.m6c)+')')+tr('Prediksi / % prediksi / batas bawah',o.m6Pred==null?'–':f1(o.m6Pred)+' m / '+f1(o.m6Pct)+'% / '+f1(o.m6LLN)+' m')+tr('Estimasi VO₂peak',f1(o.m6VO2)+' ml/kg/menit')+tr('Berhenti',v('m6Stop')+' kali, '+v('m6StopDur')+' detik')+tr('Alat bantu / O₂',($('m6Alat').value||'Tidak ada')+' / '+($('m6Oks').value||'Tidak'))+tr('Dihentikan dini',$('m6Early').checked?'Ya – '+v('m6Alasan'):'Tidak')+'</table>'+
+ if(has('mwt')){h+='<h2>'+L()+'6 Minute Walk Test</h2><table>'+tr('Panjang lintasan',(num('m6Lint')||30)+' m')+tr('Lintasan + sisa',v('m6Laps')+' lintasan + '+v('m6Extra')+' m')+tr('<b>Jarak tempuh</b>','<b>'+f1(o.m6Dist)+' m</b>'+(o.m6pc?' ('+o.m6pc.k+')':''))+tr('Prediksi / % prediksi / batas bawah',o.m6Pred==null?'–':f1(o.m6Pred)+' m / '+f1(o.m6Pct)+'% / '+f1(o.m6LLN)+' m')+tr('Tingkat kapasitas fungsional',k(o.m6lv))+tr('Estimasi VO₂peak',f1(o.m6VO2)+' ml/kg/menit')+tr('Berhenti',v('m6Stop')+' kali, '+v('m6StopDur')+' detik')+tr('Alat bantu / O₂',($('m6Alat').value||'Tidak ada')+' / '+($('m6Oks').value||'Tidak'))+tr('Dihentikan dini',$('m6Early').checked?'Ya – '+v('m6Alasan'):'Tidak')+'</table>'+
   '<table><tr><th>Tanda vital</th><th>Sebelum</th><th>Sesudah</th></tr>'+[['Nadi (x/mnt)','m6HR'],['SpO₂ (%)','m6O'],['TD (mmHg)',''],['Borg sesak','m6B'],['Borg lelah','m6F']].map(function(r){return r[1]?'<tr><td>'+r[0]+'</td><td>'+v(r[1]+'0')+'</td><td>'+v(r[1]+'1')+'</td></tr>':'<tr><td>'+r[0]+'</td><td>'+v('m6S0')+'/'+v('m6D0')+'</td><td>'+v('m6S1')+'/'+v('m6D1')+'</td></tr>'}).join('')+'</table><p>Catatan: '+v('m6Cat')+'</p>'}
  if(has('bbs')){h+='<h2>'+L()+'Berg Balance Scale</h2><table><tr><th>No</th><th>Item</th><th>Skor</th></tr>'+BBS_ITEMS.map(function(it,i){return '<tr><td>'+(i+1)+'</td><td>'+it[0]+'</td><td>'+v('bbs'+(i+1))+'</td></tr>'}).join('')+'<tr><td></td><td><b>Total</b></td><td><b>'+(o.bbsTot==null?'–':o.bbsTot+' / 56')+'</b></td></tr></table><p>Interpretasi: '+k(o.bbsc)+'. Catatan: '+v('bbsCat')+'</p>'}
  if(has('tug')){var ob=[['tugo1','langkah pendek/menyeret'],['tugo2','goyah'],['tugo3','berpegangan'],['tugo4','berbalik lambat'],['tugo5','butuh dorongan tangan']].filter(function(x){return $(x[0]).checked}).map(function(x){return x[1]});
@@ -712,7 +715,7 @@ function print2(o,L,k){var h='';
  if(has('odi')){h+='<h2>'+L()+'Oswestry Disability Index</h2><table><tr><th>Bagian</th><th>Pernyataan terpilih</th><th>Skor</th></tr>'+ODI_ITEMS.map(function(it,i){var y=$('odi'+(i+1)).value;return '<tr><td>'+(i+1)+'. '+it[0]+'</td><td>'+(y===''?'–':y==='na'?'Tidak berlaku':esc(it[1][+y]))+'</td><td>'+(y===''||y==='na'?'–':y)+'</td></tr>'}).join('')+'<tr><td colspan="2"><b>Skor ODI</b></td><td><b>'+(o.odi==null?'–':f1(o.odi)+'%')+'</b></td></tr></table><p>Interpretasi: '+k(o.odic)+'. Catatan: '+v('odiCat')+'</p>'}
  return h}
 var CSV2=(function(){var c=[],g={};function add(grp,k,l){c.push([k,l]);g[k]=grp}
- [['m6Lint','6MWT lintasan'],['m6Laps','6MWT jml lintasan'],['m6Extra','6MWT sisa'],['m6DistIn','6MWT jarak input'],['$m6Dist','6MWT jarak (m)'],['$m6Pred','6MWT prediksi'],['$m6Pct','6MWT % prediksi'],['$m6LLN','6MWT batas bawah'],['$m6c','Kat. 6MWT'],['$m6VO2','VO2peak est.'],['m6BB','6MWT BB'],['m6HR0','Nadi pre'],['m6HR1','Nadi post'],['m6O0','SpO2 pre'],['m6O1','SpO2 post'],['m6S0','Sistol pre'],['m6D0','Diastol pre'],['m6S1','Sistol post'],['m6D1','Diastol post'],['m6B0','Borg sesak pre'],['m6B1','Borg sesak post'],['m6F0','Borg lelah pre'],['m6F1','Borg lelah post'],['m6Stop','Jml berhenti'],['m6StopDur','Lama berhenti (s)'],['m6Alat','6MWT alat bantu'],['m6Oks','O2 tambahan'],['m6Early','Dihentikan dini'],['m6Alasan','Alasan berhenti'],['m6Cat','Catatan 6MWT']].forEach(function(x){add('mwt',x[0],x[1])});
+ [['m6Lint','6MWT lintasan'],['m6Laps','6MWT jml lintasan'],['m6Extra','6MWT sisa'],['m6DistIn','6MWT jarak input'],['$m6Dist','6MWT jarak (m)'],['$m6Pred','6MWT prediksi'],['$m6Pct','6MWT % prediksi'],['$m6LLN','6MWT batas bawah'],['$m6c','Kat. 6MWT (% prediksi)'],['$m6lv','Tingkat kapasitas 6MWT'],['$m6VO2','VO2peak est.'],['m6BB','6MWT BB'],['m6HR0','Nadi pre'],['m6HR1','Nadi post'],['m6O0','SpO2 pre'],['m6O1','SpO2 post'],['m6S0','Sistol pre'],['m6D0','Diastol pre'],['m6S1','Sistol post'],['m6D1','Diastol post'],['m6B0','Borg sesak pre'],['m6B1','Borg sesak post'],['m6F0','Borg lelah pre'],['m6F1','Borg lelah post'],['m6Stop','Jml berhenti'],['m6StopDur','Lama berhenti (s)'],['m6Alat','6MWT alat bantu'],['m6Oks','O2 tambahan'],['m6Early','Dihentikan dini'],['m6Alasan','Alasan berhenti'],['m6Cat','Catatan 6MWT']].forEach(function(x){add('mwt',x[0],x[1])});
  for(var i=1;i<=14;i++)add('bbs','bbs'+i,'BBS '+i);
  [['$bbsTot','BBS total'],['$bbsc','Kat. BBS'],['bbsCat','Catatan BBS']].forEach(function(x){add('bbs',x[0],x[1])});
  [['tugAlat','TUG alat bantu'],['tug1','TUG 1'],['tug2','TUG 2'],['tug3','TUG 3'],['r_tugMode','Mode TUG'],['$tug','TUG (s)'],['$tugc','Kat. TUG'],['$tugObs','TUG tanda gangguan jalan'],['tugCat','Catatan TUG']].forEach(function(x){add('tug',x[0],x[1])});
@@ -1021,7 +1024,7 @@ document.querySelector('main').addEventListener('change',function(){calc();saveD
 
 renderGripNorm();
 /* ---------- akun ---------- */
-var APP_VERSION='4.3 (15 Nov 2026)';
+var APP_VERSION='4.4 (15 Nov 2026)';
 if('serviceWorker' in navigator&&location.protocol==='https:'&&location.hostname!=='app.local'){navigator.serviceWorker.register('sw.js').catch(function(){})}
 var DEFAULT_CONFIG={apiKey:"AIzaSyDm_HcF1wc8oK7lahzJQCJCTlvrZJXJsJc",authDomain:"fisioterapi-ummetro.firebaseapp.com",projectId:"fisioterapi-ummetro",storageBucket:"fisioterapi-ummetro.firebasestorage.app",messagingSenderId:"411291393908",appId:"1:411291393908:web:0a2e99907fc6357a88d621"}; /* bisa diisi konfigurasi Firebase bawaan saat build */
 var ME=null;
