@@ -61,12 +61,12 @@ th{background:#EEF2F6}
 header{display:flex;align-items:center;gap:8px}header .t{flex:1;min-width:0}
 header h1{font-size:16px}
 #userBtn{max-width:34%!important}
-@media (max-width:400px){header{padding:10px 12px 8px}.hlogo{height:28px!important}}
+@media (max-width:400px){header{padding:10px 12px 8px}.hlogo{height:40px!important}}
 input,select,textarea{font-size:16px}
 .bar{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
 main{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
 header .t h1,header .t small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hlogo{height:32px;flex:0 0 auto;background:#fff;border-radius:8px;padding:4px 6px}
+.hlogo{height:44px;flex:0 0 auto;background:#fff;border-radius:8px;padding:4px 6px}
 nav button{color:#b9c6e6}
 #userBtn{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:20px;padding:6px 12px;font-size:13px;max-width:45%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ov{position:fixed;inset:0;background:var(--bg);z-index:50;overflow:auto;display:none}
@@ -965,7 +965,7 @@ function doPrint(){
  function k(c){return c?c.k:'–'}
  var sk=[['sk1','Nyeri/cedera akut tangan–pergelangan'],['sk2','Nyeri punggung bawah akut/HNP'],['sk3','Pasca operasi < 3 bulan'],['sk4','Hipertensi tidak terkontrol'],['sk5','Alat pacu jantung/implan'],['sk6','Hamil']].filter(function(x){return $(x[0]).checked}).map(function(x){return x[1]});
  var li=0;function L(){return 'ABCDEFGHIJKLMN'[li++]+'. '}
- var h='<div style="text-align:center"><img src="logo.png" style="height:70px"></div><h1>FORM PEMERIKSAAN TES FISIK</h1><div class="sub">'+TESTS.filter(function(t){return has(t.id)}).map(function(t){return t.label}).join(' · ')+'<br>Prodi D3 Fisioterapi – FIKes Universitas Muhammadiyah Metro</div>'+
+ var h='<div style="text-align:center"><img src="logo.png" style="height:80px"></div><h1>FORM PEMERIKSAAN TES FISIK</h1><div class="sub">'+TESTS.filter(function(t){return has(t.id)}).map(function(t){return t.label}).join(' · ')+'<br>Prodi D3 Fisioterapi – FIKes Universitas Muhammadiyah Metro</div>'+
  '<h2>'+L()+'Identitas Klien</h2><table>'+tr('No. Responden/RM',v('no'))+tr('Nama',v('nama'))+tr('Jenis kelamin',s==='L'?'Laki-laki':s==='P'?'Perempuan':'–')+tr('Tanggal lahir / Usia',v('tgllahir')+' / '+v('usia')+' th')+tr('Alamat',esc(alamatLengkap())||'–')+tr('No. HP',v('hp'))+tr('Tinggi badan',v('tb')+' cm')+tr('Tangan dominan',v('dominan'))+tr('Pekerjaan/olahraga',v('pekerjaan'))+tr('Riwayat',v('riwayat'))+tr('Tanggal & jam',v('tglperiksa')+' '+v('jam'))+tr('Pemeriksa',v('pemeriksa'))+tr('Skrining keamanan',sk.length?sk.join(', '):'Tidak ada')+'</table>'+
  (has('grip')?'<h2>'+L()+'Hand Grip Strength Test</h2><table><tr><th>Percobaan</th><th>Kanan (kg)</th><th>Kiri (kg)</th></tr>'+[1,2,3].map(function(i){return '<tr><td>'+i+'</td><td>'+v('gr'+i)+'</td><td>'+v('gl'+i)+'</td></tr>'}).join('')+
  '<tr><td><b>'+(radio('gripMode')==='mean'?'Rata-rata':'Tertinggi')+'</b></td><td><b>'+f1(o.gR)+'</b> ('+k(o.gRc)+')</td><td><b>'+f1(o.gL)+'</b> ('+k(o.gLc)+')</td></tr></table>'+
@@ -1004,7 +1004,7 @@ document.querySelector('main').addEventListener('change',function(){calc();saveD
 
 renderGripNorm();
 /* ---------- akun ---------- */
-var APP_VERSION='3.3 (15 Nov 2026)';
+var APP_VERSION='3.4 (15 Nov 2026)';
 if('serviceWorker' in navigator&&location.protocol==='https:'&&location.hostname!=='app.local'){navigator.serviceWorker.register('sw.js').catch(function(){})}
 var DEFAULT_CONFIG={apiKey:"AIzaSyDm_HcF1wc8oK7lahzJQCJCTlvrZJXJsJc",authDomain:"fisioterapi-ummetro.firebaseapp.com",projectId:"fisioterapi-ummetro",storageBucket:"fisioterapi-ummetro.firebasestorage.app",messagingSenderId:"411291393908",appId:"1:411291393908:web:0a2e99907fc6357a88d621"}; /* bisa diisi konfigurasi Firebase bawaan saat build */
 var ME=null;

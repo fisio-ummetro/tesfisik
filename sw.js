@@ -1,5 +1,5 @@
 /* Service worker: versi terbaru saat online, cadangan saat offline */
-const CACHE = 'tesfisik-v1';
+const CACHE = 'tesfisik-v2';
 const CORE = ['./', './index.html', './cloud.js', './lampung.js', './logo.png', './logo-mark.png', './manifest.webmanifest', './icon-192.png'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
